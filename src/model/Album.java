@@ -1,7 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 
 public class Album {
@@ -89,10 +91,21 @@ public class Album {
         return "Album: " + this.albumName + "\nPhotos:\n" + result;
     }
 
-    /*
-    public List<Photo> search(query) {
-        return null; // TODO: Implement search (for date and tags)
+
+    public List<Photo> search(List<Map<String, String>> tags) {
+        // query will look like tagname=tagvalue 
+        // can also have conjunctions like AND and OR
+        // ex. tagname=tagvalue AND tagname=tagvalue
+        // ex. tagname=tagvalue OR tagname=tagvalue
+        return null;
+    }
+
+    public List<Photo> search(Calendar date) {
+        
+        // return all photos in the album that have the same date
+
+        return null;
     }
     
-     */
+     
 }
