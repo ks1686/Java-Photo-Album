@@ -92,18 +92,17 @@ public class Album {
     }
 
 
-    public List<Photo> search(List<Map<String, String>> tags) {
-        // query will look like tagname=tagvalue 
-        // can also have conjunctions like AND and OR
-        // ex. tagname=tagvalue AND tagname=tagvalue
-        // ex. tagname=tagvalue OR tagname=tagvalue
+    public List<Photo> search(List<Map<String, String>> tags, String operator) {
+        // TODO: implement
+        // List will contain at most 2 tags. tags are a key-value pair
+
         return null;
     }
 
     public List<Photo> search(Calendar date) {
         
         // return all photos in the album that have the same date
-
+        // TODO: implement
         return null;
     }
     
