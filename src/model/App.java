@@ -10,9 +10,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/view/hellofx.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/app.fxml"));
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 400, 300));
+        primaryStage.setScene(new Scene(root, 600, 500));
         primaryStage.show();
     }
 
