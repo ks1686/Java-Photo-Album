@@ -1,10 +1,9 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.nio.file.Files; // idk if we can use this, just found this on google
 import java.nio.file.Path;
 
@@ -13,9 +12,9 @@ public class Photo {
     private String filepath;
     private String caption;
     private Calendar date;
-    private Map<String, Set<String>> tags;
+    private List<Map<String, String>> tags;
 
-    public Photo(String filepath, String caption, Map<String, Set<String>> tags) throws NullPointerException, IllegalArgumentException {
+    public Photo(String filepath, String caption, List<Map<String, String>> tags) throws NullPointerException, IllegalArgumentException {
         Path path = Path.of(filepath);
 
         if (!Files.exists(path)) {
@@ -41,7 +40,7 @@ public class Photo {
         }
 
         if (tags == null) {
-            this.tags = new HashMap<>();
+            this.tags = new ArrayList<>();
         } else {
             this.tags = tags;
         }
@@ -57,14 +56,14 @@ public class Photo {
     }
 
     public Photo(String filepath) {
-        this(filepath, "", new HashMap<>());
+        this(filepath, "", new ArrayList<>());
     }
 
     public Photo(String filepath, String caption) {
-        this(filepath, caption, new HashMap<>());
+        this(filepath, caption, new ArrayList<>());
     }
 
-    public Photo(String filepath, Map<String, Set<String>> tags) {
+    public Photo(String filepath, List<Map<String, String>> tags) {
         this(filepath, "", tags);
     }
 
@@ -87,7 +86,7 @@ public class Photo {
         return date;
     }
 
-    public Map<String, Set<String>> getTags() {
+    public List<Map<String, String>> getTags() {
         return tags;
     }
 
@@ -104,31 +103,23 @@ public class Photo {
             throw new IllegalArgumentException("value cannot be empty");
         }
 
-        // find the set
-        Set<String> tagSet = tags.get(key);
-        if (tagSet == null) {
-            tagSet = new HashSet<>();
-            tags.put(key, tagSet);
-        } else {
-            tagSet.add(value);
-        }
-
+        Map<String, String> tag = Map.of(key, value);
+        tags.add(tag);
     }
 
-    public void removeTag(String key, String value) throws NullPointerException {
-        // find the set
-        Set<String> tagSet = tags.get(key);
-        if (tagSet == null) {
-            throw new NullPointerException("key does not exist");
-        } else {
-            tagSet.remove(value);
+    public void removeTag(String key) throws NullPointerException {
+        if (key == null) {
+            throw new NullPointerException("key cannot be null");
+        } else if (key.isEmpty()) {
+            throw new IllegalArgumentException("key cannot be empty");
         }
 
-        // if the set is empty, remove the key
-        if (tagSet.isEmpty()) {
-            tags.remove(key);
+        for (int i = 0; i < tags.size(); i++) {
+            if (tags.get(i).containsKey(key)) {
+                tags.remove(i);
+                break;
+            }
         }
-
     }
 
     public String toString() {
