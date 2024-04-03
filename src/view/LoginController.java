@@ -19,6 +19,20 @@ public class LoginController {
     public void handleLogin(ActionEvent e) throws Exception{
         String username = usernameTextField.getText();
 
+        // check if username is "admin"
+        if (username.equals("admin")) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/adminhomepage.fxml"));
+            Pane root = loader.load();
+            AdminHomepageController adminController = loader.getController();
+            Stage stage = (Stage) usernameTextField.getScene().getWindow();
+            adminController.start(stage);
+            Scene scene = new Scene(root, 800, 600);
+            stage.setScene(scene);
+            stage.show();
+            return;
+        }
+
         // check if there is a folder in /data/ with the username
         boolean folderExists = false;
         File usernames[] = new File("data").listFiles();
