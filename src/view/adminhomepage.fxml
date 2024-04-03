@@ -16,12 +16,12 @@
             <Font size="54.0" />
          </font>
       </Text>
-      <Button fx:id="createUserButton" layoutX="247.0" layoutY="476.0" mnemonicParsing="false" text="Create New User">
+      <Button fx:id="createUserButton" onAction="#createUser" layoutX="247.0" layoutY="476.0" mnemonicParsing="false" text="Create New User">
          <font>
             <Font size="31.0" />
          </font>
       </Button>
-      <Button fx:id="deleteUserButton" layoutX="215.0" layoutY="417.0" mnemonicParsing="false" text="Delete Selected User">
+      <Button fx:id="deleteUserButton" onAction="#deleteUser" disable="true" layoutX="215.0" layoutY="417.0" mnemonicParsing="false" text="Delete Selected User">
          <font>
             <Font size="31.0" />
          </font>

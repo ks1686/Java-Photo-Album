@@ -7,12 +7,13 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 public class AdminUserListController {
     @FXML ListView<String> adminUserListView;
-    private ObservableList<String> obsList;
+    public ObservableList<String> obsList;
 
     public void start(Stage stage) {
         List<String> users = new ArrayList<>();
@@ -31,14 +32,17 @@ public class AdminUserListController {
         obsList = FXCollections.observableArrayList(users);
         adminUserListView.setItems(obsList);
 
-        adminUserListView.getSelectionModel().select(0);
-
+        // set the listener
         adminUserListView.getSelectionModel().selectedIndexProperty().addListener((obsList, oldVal, newVal) -> showItem(stage));
 
-        // print out albumListView's items
-        System.out.println("Users: " + adminUserListView.getItems());
     }
     private void showItem(Stage mainstage) {
-        System.out.println("Selected item: " + adminUserListView.getSelectionModel().getSelectedItem());
+        String selectedUser = adminUserListView.getSelectionModel().getSelectedItem();
+        Button deleteUserButton = (Button) mainstage.getScene().lookup("#deleteUserButton");
+        if (selectedUser != null) {
+            deleteUserButton.setDisable(false);
+        } else {
+            deleteUserButton.setDisable(true);
+        }
     }
 }
