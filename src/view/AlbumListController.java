@@ -110,10 +110,7 @@ public class AlbumListController {
         System.out.println("Username: " + username); // print out the username
 
         // find the original album name (without the number of photos and range of dates)
-        int index = albumName.indexOf("("); // find the index of the first parenthesis
-        if (index != -1) { // if the index is not -1
-            albumName = albumName.substring(0, index - 1); // get the substring from the beginning to the index - 1
-        }
+        albumName = fixAlbumName(albumName);
 
         // get the album directory
         File albumDir = new File("data/" + username + "/" + albumName);
@@ -145,5 +142,15 @@ public class AlbumListController {
             System.out.println("Album does not exist: " + albumName);
         }
 
+    }
+
+    // method to fix album names for directory modification
+    public String fixAlbumName(String albumName) {
+        // find the original album name (without the number of photos and range of dates)
+        int index = albumName.indexOf("("); // find the index of the first parenthesis
+        if (index != -1) { // if the index is not -1
+            albumName = albumName.substring(0, index - 1); // get the substring from the beginning to the index - 1
+        }
+        return albumName;
     }
 }
