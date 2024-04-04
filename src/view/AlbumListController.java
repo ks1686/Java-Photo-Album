@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import javafx.scene.control.Alert;
 import model.PhotoApp;
 
 
@@ -130,11 +131,15 @@ public class AlbumListController {
                         System.out.println("Failed to delete file: " + f.getName());
                     }
                 }
+
             }
 
             // delete the album directory itself
             if (!albumDir.delete()) {
                 System.out.println("Failed to delete album directory: " + albumDir.getName());
+
+                // throw an alert pop-up saying that the album directory could not be deleted
+                alert("Delete Album", "Failed to delete album directory", "Failed to delete album directory: " + albumDir.getName());
             }
 
             // refresh the list view
@@ -156,6 +161,9 @@ public class AlbumListController {
             app.start(new Stage());
         } catch (Exception e) {
             e.printStackTrace();
+
+            // throw an alert pop-up saying that the login screen could not be returned to
+            alert("Logout", "Failed to return to login screen", "Failed to return to login screen");
         }
 
         // close the current stage
@@ -176,12 +184,20 @@ public class AlbumListController {
         // check if the album directory exists
         if (!albumDir.exists()) {
             System.out.println("Album does not exist: " + albumName);
+
+            // throw an alert pop-up saying that the album does not exist
+            alert("Rename Album", "Album does not exist", "The album does not exist: " + albumName);
+
             return;
         }
 
         // check if the new album directory exists
         if (newAlbumDir.exists()) {
             System.out.println("Album already exists: " + newAlbumName);
+
+            // throw an alert pop-up saying that the album already exists
+            alert("Rename Album", "Album already exists", "The album already exists: " + newAlbumName);
+
             return;
         }
 
@@ -189,6 +205,9 @@ public class AlbumListController {
         if (albumDir.renameTo(newAlbumDir)) {
             System.out.println("Album renamed to: " + newAlbumName);
         } else {
+            // throw an alert pop-up saying that the album could not be renamed
+            alert("Rename Album", "Failed to rename album", "Failed to rename album: " + albumName);
+
             System.out.println("Failed to rename album: " + albumName);
         }
 
@@ -204,5 +223,14 @@ public class AlbumListController {
             albumName = albumName.substring(0, index - 1); // get the substring from the beginning to the index - 1
         }
         return albumName;
+    }
+
+    // method to throw an alert pop-up
+    public void alert(String title, String header, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }
