@@ -173,6 +173,18 @@ public class AlbumListController {
         // get the new album directory
         File newAlbumDir = new File("data/" + username + "/" + newAlbumName);
 
+        // check if the album directory exists
+        if (!albumDir.exists()) {
+            System.out.println("Album does not exist: " + albumName);
+            return;
+        }
+
+        // check if the new album directory exists
+        if (newAlbumDir.exists()) {
+            System.out.println("Album already exists: " + newAlbumName);
+            return;
+        }
+
         // rename the album directory
         if (albumDir.renameTo(newAlbumDir)) {
             System.out.println("Album renamed to: " + newAlbumName);
