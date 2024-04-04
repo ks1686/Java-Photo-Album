@@ -16,6 +16,14 @@ public class AlbumListController {
     @FXML ListView<String> albumListView;
     private ObservableList<String> obsList;
 
+    private String username;
+
+    // method to set the username
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    // method to start the album list controller
     public void start(Stage stage, String username) {
         List<String> albums = new ArrayList<>();
         
@@ -41,7 +49,9 @@ public class AlbumListController {
                 }
             }
 
+            // ! Fix here, don't add to the name, just print on the list
             albums.set(i, albums.get(i) + " (" + numPhotos + " photos)"); // add the number of photos to the album name
+
 
             // get the range of dates
             String range = "";
@@ -63,6 +73,7 @@ public class AlbumListController {
 
                 range = lastStr + " - " + firstStr; // set the range to the first and last date
 
+                // ! Fix here, don't add to the name, just print on the list
                 albums.set(i, albums.get(i) + " (" + range + ")"); // add the range to the album name
             }
 
@@ -86,5 +97,45 @@ public class AlbumListController {
 
     private void showItem(Stage mainstage) {
         System.out.println("Selected item: " + albumListView.getSelectionModel().getSelectedItem()); // print out the selected item
+    }
+
+    // method to return the selected album
+    public String getSelectedAlbum() {
+        return albumListView.getSelectionModel().getSelectedItem();
+    }
+
+    // method to delete the album
+    public void deleteAlbum(String albumName) {
+        System.out.println("Deleting album: " + albumName); // print out the album name
+        System.out.println("Username: " + username); // print out the username
+
+        File albumDir = new File("data/" + username + "/" + albumName); // get the album's directory
+
+        //print albumDir
+        System.out.println("Album Directory: " + albumDir);
+
+        // check if the album directory exists
+        if (albumDir.exists()) {
+            // delete all files in the album directory
+            File[] files = albumDir.listFiles();
+            if (files != null) {
+                for (File f : files) {
+                    if (!f.delete()) {
+                        System.out.println("Failed to delete file: " + f.getName());
+                    }
+                }
+            }
+
+            // delete the album directory itself
+            if (!albumDir.delete()) {
+                System.out.println("Failed to delete album directory: " + albumDir.getName());
+            }
+
+            // refresh the list view
+            start(new Stage(), username);
+        } else {
+            System.out.println("Album does not exist: " + albumName);
+        }
+
     }
 }
