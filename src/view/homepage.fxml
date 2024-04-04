@@ -6,5 +6,5 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomepageController">
    <fx:include fx:id="albumList" source="albumlist.fxml" />
    <Button id="deleteAlbumButton" layoutX="376.0" layoutY="411.0" mnemonicParsing="false" onAction="#deleteAlbum" text="Delete" />
-   <Button id="logoutButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Logout" onAction="#logout"/>
+   <Button id="logoutButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
 </Pane>

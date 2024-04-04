@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
+import model.PhotoApp;
 
 public class AdminHomepageController {
     @FXML
@@ -74,6 +75,26 @@ public class AdminHomepageController {
         dialog.setContentText("Username: ");
         Optional<String> result = dialog.showAndWait();
         return result;
+    }
+
+    // method to logout
+    @FXML
+    public void logout() {
+        // print out a message saying we are logging out of the user
+        System.out.println("Logging out of admin");
+
+        // return to the login screen
+        PhotoApp app = new PhotoApp();
+        try {
+            app.start(new Stage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // close the current window
+        Stage stage = (Stage) createUserButton.getScene().getWindow();
+        stage.close();
+
     }
 
 }

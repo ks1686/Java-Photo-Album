@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AdminHomepageController">
    <children>
@@ -16,15 +13,16 @@
             <Font size="54.0" />
          </font>
       </Text>
-      <Button fx:id="createUserButton" onAction="#createUser" layoutX="247.0" layoutY="476.0" mnemonicParsing="false" text="Create New User">
+      <Button fx:id="createUserButton" layoutX="247.0" layoutY="476.0" mnemonicParsing="false" onAction="#createUser" text="Create New User">
          <font>
             <Font size="31.0" />
          </font>
       </Button>
-      <Button fx:id="deleteUserButton" onAction="#deleteUser" disable="true" layoutX="215.0" layoutY="417.0" mnemonicParsing="false" text="Delete Selected User">
+      <Button fx:id="deleteUserButton" disable="true" layoutX="215.0" layoutY="417.0" mnemonicParsing="false" onAction="#deleteUser" text="Delete Selected User">
          <font>
             <Font size="31.0" />
          </font>
       </Button>
+      <Button id="logoutButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
    </children>
 </Pane>
