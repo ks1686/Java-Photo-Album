@@ -24,4 +24,10 @@ public class HomepageController {
         }
     }
 
+    @FXML
+    private void logout() {
+        // go back to the login screen
+        albumListController.logout();
+    }
+
 }

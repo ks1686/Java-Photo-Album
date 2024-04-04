@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import model.PhotoApp;
 
 
 public class AlbumListController {
@@ -143,6 +144,24 @@ public class AlbumListController {
         }
 
     }
+
+    // return to the login screen (use the PhotoApp class)
+    public void logout() {
+        // print out a message saying we are logging out of the user
+        System.out.println("Logging out of user: " + username);
+
+        // return to the login screen
+        PhotoApp app = new PhotoApp();
+        try {
+            app.start(new Stage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // close the current stage
+        albumListView.getScene().getWindow().hide();
+    }
+
 
     // method to fix album names for directory modification
     public String fixAlbumName(String albumName) {
