@@ -2,6 +2,7 @@ package view;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -29,7 +30,7 @@ public class AlbumListController {
             }
         }
 
-        // add the number of photos in each album to the list
+        // add the number of photos in each album to the list and the range of dates
         for (int i = 0; i < albums.size(); i++) {
             File albumDir = new File("data/" + username + "/" + albums.get(i)); // get the album's directory
             File[] albumFiles = albumDir.listFiles(); // get all the files in the album's directory
@@ -39,7 +40,35 @@ public class AlbumListController {
                     numPhotos++; // increment the number of photos
                 }
             }
+
             albums.set(i, albums.get(i) + " (" + numPhotos + " photos)"); // add the number of photos to the album name
+
+            // get the range of dates
+            String range = "";
+            if (numPhotos > 0) { // if there are photos
+                File firstPhoto = albumFiles[0]; // get the first photo
+                File lastPhoto = albumFiles[numPhotos - 1]; // get the last photo
+
+                // using File class to get the last modified date of the file
+                long firstDate = firstPhoto.lastModified();
+                long lastDate = lastPhoto.lastModified();
+
+                // convert the long to a date
+                Date first = new Date(firstDate);
+                Date last = new Date(lastDate);
+
+                // convert the date to a string
+                String firstStr = first.toString();
+                String lastStr = last.toString();
+
+                range = lastStr + " - " + firstStr; // set the range to the first and last date
+
+                albums.set(i, albums.get(i) + " (" + range + ")"); // add the range to the album name
+            } else { // if there are no photos
+                range = "No photos"; // set the range to "No photos"
+
+            }
+
         }
 
 

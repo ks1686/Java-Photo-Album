@@ -46,8 +46,8 @@ public class Photo {
         }
 
     
-        this.date = Calendar.getInstance();
-        this.date.setTimeInMillis(path.toFile().lastModified());
+        this.date = Calendar.getInstance(); // get the current date and time
+        this.date.setTimeInMillis(path.toFile().lastModified()); // set the date and time to the last modified date of the file
 
         this.filepath = filepath;
         this.caption = caption;
@@ -82,6 +82,7 @@ public class Photo {
         this.caption = caption;
     }
 
+    // get the date of the photo
     public Calendar getDate() {
         return date;
     }
