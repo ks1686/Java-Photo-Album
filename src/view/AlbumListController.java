@@ -49,7 +49,7 @@ public class AlbumListController {
                 }
             }
 
-            // ! Fix here, don't add to the name, just print on the list
+            // add the number of photos to the album name (messes up directory so be sure to have conditional to fix in other code)
             albums.set(i, albums.get(i) + " (" + numPhotos + " photos)"); // add the number of photos to the album name
 
 
@@ -73,7 +73,7 @@ public class AlbumListController {
 
                 range = lastStr + " - " + firstStr; // set the range to the first and last date
 
-                // ! Fix here, don't add to the name, just print on the list
+                // add the range to the album name (messes up directory so be sure to have conditional to fix in other code)
                 albums.set(i, albums.get(i) + " (" + range + ")"); // add the range to the album name
             }
 
@@ -109,7 +109,15 @@ public class AlbumListController {
         System.out.println("Deleting album: " + albumName); // print out the album name
         System.out.println("Username: " + username); // print out the username
 
-        File albumDir = new File("data/" + username + "/" + albumName); // get the album's directory
+        // find the original album name (without the number of photos and range of dates)
+        int index = albumName.indexOf("("); // find the index of the first parenthesis
+        if (index != -1) { // if the index is not -1
+            albumName = albumName.substring(0, index - 1); // get the substring from the beginning to the index - 1
+        }
+
+        // get the album directory
+        File albumDir = new File("data/" + username + "/" + albumName);
+
 
         //print albumDir
         System.out.println("Album Directory: " + albumDir);
