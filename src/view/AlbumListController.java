@@ -27,10 +27,10 @@ public class AlbumListController {
     // method to start the album list controller
     public void start(Stage stage, String username) {
         List<String> albums = new ArrayList<>();
-        
+
         // go through data/{username}/ and get all the album names
         // add them to the list
-        
+
         File userDir = new File("data/" + username); // get the user's directory
         File[] files = userDir.listFiles(); // get all the files in the user's directory
         for (File f : files) { // go through all the files
@@ -162,6 +162,27 @@ public class AlbumListController {
         albumListView.getScene().getWindow().hide();
     }
 
+    // method to rename an existing album
+    public void renameAlbum(String albumName, String newAlbumName) {
+        // find the original album name (without the number of photos and range of dates)
+        albumName = fixAlbumName(albumName);
+
+        // get the album directory
+        File albumDir = new File("data/" + username + "/" + albumName);
+
+        // get the new album directory
+        File newAlbumDir = new File("data/" + username + "/" + newAlbumName);
+
+        // rename the album directory
+        if (albumDir.renameTo(newAlbumDir)) {
+            System.out.println("Album renamed to: " + newAlbumName);
+        } else {
+            System.out.println("Failed to rename album: " + albumName);
+        }
+
+        // refresh the list view
+        start(new Stage(), username);
+    }
 
     // method to fix album names for directory modification
     public String fixAlbumName(String albumName) {

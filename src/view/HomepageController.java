@@ -1,6 +1,7 @@
 package view;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 
 
@@ -14,6 +15,7 @@ public class HomepageController {
         albumListController.setUsername(username);
     }
 
+    // method to delete an album
     @FXML
     private void deleteAlbum() {
         String albumName = albumListController.getSelectedAlbum();
@@ -24,10 +26,33 @@ public class HomepageController {
         }
     }
 
+    // method to log out
     @FXML
     private void logout() {
         // go back to the login screen
         albumListController.logout();
+    }
+
+    // method to rename an album
+    // button press opens a dialog box to enter the new album name
+    @FXML
+    private void renameAlbum() {
+        // open a text input dialog box
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Rename Album");
+        dialog.setHeaderText("Enter the new album name:");
+        dialog.setContentText("New album name:");
+
+        // get the new album name
+        String newAlbumName = dialog.showAndWait().get();
+
+        // get the selected album
+        String albumName = albumListController.getSelectedAlbum();
+
+        // if the album name is not null, rename the album
+        if (albumName != null) {
+            albumListController.renameAlbum(albumName, newAlbumName);
+        }
     }
 
 }
