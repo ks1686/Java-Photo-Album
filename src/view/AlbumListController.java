@@ -64,9 +64,6 @@ public class AlbumListController {
                 range = lastStr + " - " + firstStr; // set the range to the first and last date
 
                 albums.set(i, albums.get(i) + " (" + range + ")"); // add the range to the album name
-            } else { // if there are no photos
-                range = "No photos"; // set the range to "No photos"
-
             }
 
         }
