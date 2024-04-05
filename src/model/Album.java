@@ -1,11 +1,13 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
 
-public class Album {
+public class Album implements Serializable {
     private String albumName;
     private List<Photo> photos;
 
@@ -24,6 +26,7 @@ public class Album {
         }
         
         this.albumName = albumName;
+        this.photos = photos;
     }
 
     public void addPhoto(Photo photo) {
@@ -90,6 +93,31 @@ public class Album {
         return "Album: " + this.albumName + "\nPhotos:\n" + result;
     }
 
+    public Calendar getStartDate() {
+        if (this.photos.isEmpty()) {
+            return null;
+        }
+        Calendar startDate = this.photos.get(0).getDate();
+        for (Photo photo : this.photos) {
+            if (photo.getDate().compareTo(startDate) < 0) {
+                startDate = photo.getDate();
+            }
+        }
+        return startDate;
+    }
+
+    public Calendar getEndDate() {
+        if (this.photos.isEmpty()) {
+            return null;
+        }
+        Calendar endDate = this.photos.get(0).getDate();
+        for (Photo photo : this.photos) {
+            if (photo.getDate().compareTo(endDate) > 0) {
+                endDate = photo.getDate();
+            }
+        }
+        return endDate;
+    }
     
     public List<Photo> search(String query) {
         // query can be a tag or a Calendar date

@@ -1,8 +1,9 @@
 package model;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
     private String username;
     private List<Album> albums; // ArrayList of albums
     
@@ -36,7 +37,14 @@ public class User {
 
     public void createAlbum(String albumName) {
         Album album = new Album(albumName);
-        albums.add(album);  // TODO: make sure duplicates are not added
+
+        for (Album a : albums) {
+            if (a.getAlbumName().equals(albumName)) {
+                return; // Do not add the album if it already exists
+            }
+        }
+
+        albums.add(album);
     }
 
     public void deleteAlbum(String albumName) {

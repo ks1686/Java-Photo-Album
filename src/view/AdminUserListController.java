@@ -10,25 +10,21 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import model.PhotoApp;
+import model.User;
 
 public class AdminUserListController {
     @FXML ListView<String> adminUserListView;
     public ObservableList<String> obsList;
-
-    public void start(Stage stage) {
+    private PhotoApp app;
+    
+    public void start(Stage stage, PhotoApp app) {
+        this.app = app;
         List<String> users = new ArrayList<>();
         
-        // go through data/{username}/ and get all the album names
-        // add them to the list
-        
-        File userDir = new File("data");
-        File[] files = userDir.listFiles();
-        for (File f : files) {
-            if (f.isDirectory()) {
-                users.add(f.getName());
-            }
+        for (User user : app.getUsers()) {
+            users.add(user.getUsername());
         }
-
         obsList = FXCollections.observableArrayList(users);
         adminUserListView.setItems(obsList);
 

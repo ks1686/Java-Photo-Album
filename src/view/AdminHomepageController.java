@@ -10,6 +10,8 @@ import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 
 import model.PhotoApp;
+import model.User;
+
 import static model.PhotoApp.infoAlert;
 
 public class AdminHomepageController {
@@ -19,30 +21,41 @@ public class AdminHomepageController {
     @FXML Button createUserButton;
     @FXML Button deleteUserButton;
 
-    public void start(Stage stage) {
-        adminUserListController.start(stage);
+    private PhotoApp app;
+
+    public void start(Stage stage, PhotoApp app) {
+        this.app = app;
+        adminUserListController.start(stage, app);
     }
 
     public void createUser() {
         System.out.println("create user button clicked");
         Stage stage = (Stage) createUserButton.getScene().getWindow();
         Optional<String> result = showItemInputDialog(stage);
-        if (result.isPresent()) { 
+        if (result.isPresent()) {  // TODO: make this use the User class
             String username = result.get();
-            // create a new folder in data/{username}
             // get list of existing usernames from adminUserListController
-            List<String> existingUsernames = adminUserListController.obsList;
-            if (existingUsernames.contains(username)) {
-                infoAlert("Error", "Invalid Username", "User already exists.");
-                return;
+            for (User user : app.getUsers()) {
+                if (user.getUsername().equals(username)) {
+                    infoAlert("Error", "Invalid Username", "User already exists.");
+                    return;
+                }
             }
+
             if (username == null || username.equals("admin") || username.equals("")) {
                 infoAlert("Error", "Invalid Username", "Cannot create a user with the username '" + username + "'.");
                 return;
             }
-            File userDir = new File("data/" + username);
-            userDir.mkdir();
+            
+            // create a new folder in data/users/{username} 
+            File userDir = new File("data/users/" + username);
+            userDir.mkdirs();
             adminUserListController.obsList.add(username);
+            User user = new User(username);
+            System.out.println("Adding user to app");
+            app.getUsers().add(user);
+            System.out.println("Length of users list: " + app.getUsers().size());
+
         }
 
     }

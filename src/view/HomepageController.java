@@ -3,16 +3,15 @@ package view;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
+import model.User;
 
 
 public class HomepageController {
     @FXML
     protected AlbumListController albumListController;
 
-    public void start(Stage stage, String username) {
-        albumListController.start(stage, username);
-        // set the username for the album list controller
-        albumListController.setUsername(username);
+    public void start(Stage stage, User user) { // TODO: make a User object and pass that instead
+        albumListController.start(stage, user);
     }
 
     // method to delete an album

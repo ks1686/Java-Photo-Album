@@ -1,7 +1,5 @@
 package view;
 
-import java.io.File;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,11 +8,19 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import model.PhotoApp;
+import model.User;
 
 public class LoginController {
     
     @FXML
     private TextField usernameTextField;
+
+    private PhotoApp app;
+
+    public void setApp(PhotoApp app) {
+        this.app = app;
+    }
 
     public void handleLogin(ActionEvent e) throws Exception{
         String username = usernameTextField.getText();
@@ -26,48 +32,34 @@ public class LoginController {
             Pane root = loader.load();
             AdminHomepageController adminController = loader.getController();
             Stage stage = (Stage) usernameTextField.getScene().getWindow();
-            adminController.start(stage);
+            System.out.println("Before going into admin, app has " + app.getUsers().size() + " users.");
+            adminController.start(stage, this.app);
             Scene scene = new Scene(root, 800, 600);
             stage.setScene(scene);
             stage.show();
             return;
         }
 
-        // check if there is a folder in /data/ with the username
-        boolean folderExists = false;
-        File usernames[] = new File("data").listFiles();
-        
-        for (File f : usernames) {
-            if (f.getName().equals(username)) {
-                folderExists = true;
+        // check if there is a user in app.userList with the given username
+        User currentUser = null;
+        System.out.println("app has " + app.getUsers().size() + " users.");
+        for (User user : app.getUsers()) {
+            if (user.getUsername().equals(username)) {
+                currentUser = user;
                 break;
             }
         }
-
-        if (folderExists) {
+        if (currentUser != null) {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/homepage.fxml"));
             Pane root = loader.load();
             HomepageController homepageController = loader.getController();
             Stage stage = (Stage) usernameTextField.getScene().getWindow();
-            homepageController.start(stage, username);
+            homepageController.start(stage, currentUser); // TODO: make a User object and pass that instead
             Scene scene = new Scene(root, 800, 600);
             stage.setScene(scene);
             stage.show();
-
-
-            /*
-            Parent root = FXMLLoader.load(getClass().getResource("/view/homepage.fxml"));
-            Stage window = (Stage) usernameTextField.getScene().getWindow();
-            window.setScene(new Scene(root, 600, 500));
-            FXMLLoader loader = new FXMLLoader(); 
-            loader.setLocation(getClass().getResource("/view/homepage.fxml"));
-            FXMLLoader albumListLoader = new FXMLLoader(getClass().getResource("/view/albumlist.fxml"));
-            Parent homepageRoot = albumListLoader.load();
-            AlbumListController albumListController = albumListLoader.getController();
-            albumListController.start(window, username);
-             */
-
+            return;
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid username");

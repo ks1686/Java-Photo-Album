@@ -1,24 +1,95 @@
 package model;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import view.LoginController;
 import javafx.scene.control.Alert;
 
-public class PhotoApp extends Application {
+// TODO: remove all print statements before submitting
+
+public class PhotoApp extends Application implements Serializable {
+
+    public static final String storeDir = "data";
+    public static final String storeFile = "data.dat";
+    static final long serialVersionUID = 1L;
+
+    private List<User> userList;
+
+    public List<User> getUsers() {
+        return userList;
+    }
+
+    private void createStockUser(PhotoApp app) {
+        User stockUser = new User("stock");
+        stockUser.createAlbum("stock");
+        stockUser.getAlbum("stock").addPhoto("data/users/stock/photos/photo1.png");
+        stockUser.getAlbum("stock").addPhoto("data/users/stock/photos/photo2.jpeg");
+        // TODO: add more photos (we need 5-10 total)
+        app.userList.add(stockUser);
+    }
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+    public void start(Stage primaryStage) throws Exception {
+        PhotoApp app;
+        try {
+            app = PhotoApp.readApp();
+        } catch (Exception e) {
+            // if there's no data.dat file made, create a new PhotoApp and create stock user
+            app = new PhotoApp();
+            app.userList = new ArrayList<>();
+            createStockUser(app);
+        }
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
+        Parent root = loader.load();
+        LoginController controller = loader.getController();
+        controller.setApp(app);
+
         primaryStage.setTitle("Photo Album");
         primaryStage.setScene(new Scene(root, 800, 600));
+        final PhotoApp finalApp = app; // doesn't work without this for some reason
+
+        // if user presses the X button, save the state of the app (this will save all Users, Albums, Photo objects)
+        primaryStage.setOnCloseRequest((EventHandler<WindowEvent>) new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                
+                try {
+                    PhotoApp.writeApp(finalApp);
+                } catch (IOException e) {
+                    errorAlert("Error writing to file", "", "Error writing to file /data/data.dat");
+                }
+            }
+        });
+        
         primaryStage.show();
+        
+    }
+
+    public static void writeApp(PhotoApp app) throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storeDir + File.separator + storeFile));
+        oos.writeObject(app);
+        oos.close();
+    }
+
+    public static PhotoApp readApp() throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(storeDir + File.separator + storeFile));
+        PhotoApp app = (PhotoApp) ois.readObject();
+        ois.close();
+        return app;
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         launch(args);
     }
 
@@ -41,4 +112,5 @@ public class PhotoApp extends Application {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
 }

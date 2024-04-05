@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.io.Serializable;
 import java.nio.file.Files; // idk if we can use this, just found this on google
 import java.nio.file.Path;
 
-public class Photo {
+public class Photo implements Serializable {
 
     private String filepath;
     private String caption;
@@ -33,10 +34,6 @@ public class Photo {
 
         if (caption == null) {
             throw new NullPointerException("caption cannot be null");
-        }
-
-        if (date == null) {
-            throw new NullPointerException("date cannot be null");
         }
 
         if (tags == null) {

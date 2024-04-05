@@ -4,3 +4,4 @@ bin/
 .vscode/
 cs213_photos.iml
 out/
+data/data.dat
