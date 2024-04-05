@@ -61,4 +61,25 @@ public class HomepageController {
         }
     }
 
+    @FXML public void createAlbum() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Create Album");
+        dialog.setHeaderText("Enter the name of the new album:");
+        dialog.setContentText("Album name:");
+
+        String albumName = dialog.showAndWait().get();
+        if (albumName != null) {
+            albumListController.createAlbum(albumName);
+        }
+        
+    }
+
+    @FXML public void searchPhotos() {
+        // open a new window to search for photos
+    }
+
+    @FXML public void openAlbum() {
+        // open a new window to view the selected album
+    }
+
 }

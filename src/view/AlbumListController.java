@@ -22,13 +22,14 @@ import static model.PhotoApp.infoAlert;
 public class AlbumListController {
     @FXML ListView<String> albumListView;
     private ObservableList<String> obsList;
-
+    private User user;
 
     // method to start the album list controller
     public void start(Stage stage, User user) {
 
         List<Album> albums = user.getAlbums();
         List<String> albumNames = new ArrayList<>();
+        this.user = user;
 
         // add the number of photos in each album to the list and the range of dates
         for (int i = 0; i < albums.size(); i++) {
@@ -41,8 +42,18 @@ public class AlbumListController {
 
             // add the number of photos and the range of dates to the album name
             // format Calendar to a String
-            String startDateString = startDate.get(Calendar.MONTH) + "/" + startDate.get(Calendar.DAY_OF_MONTH) + "/" + startDate.get(Calendar.YEAR);
-            String endDateString = endDate.get(Calendar.MONTH) + "/" + endDate.get(Calendar.DAY_OF_MONTH) + "/" + endDate.get(Calendar.YEAR);
+
+            String startDateString = "N/A";
+            String endDateString = "N/A";
+            if (startDate != null) {
+                startDateString = startDate.get(Calendar.MONTH) + "/" + startDate.get(Calendar.DAY_OF_MONTH) + "/" + startDate.get(Calendar.YEAR);
+            }
+
+            if (endDate != null) {
+                endDateString = endDate.get(Calendar.MONTH) + "/" + endDate.get(Calendar.DAY_OF_MONTH) + "/" + endDate.get(Calendar.YEAR);
+            }
+            
+            
             albumName += " (" + numPhotos + " photos, " + startDateString + " - " + endDateString + ")";
             albumNames.add(albumName);
         }
@@ -83,7 +94,15 @@ public class AlbumListController {
 
     // method to rename an existing album
     public void renameAlbum(String albumName, String newAlbumName) {
-        System.out.println("Renaming album: " + albumName + " to " + newAlbumName); // print out the album name and the new album name
+        user.getAlbum(albumName).setAlbumName(newAlbumName);
+        obsList.set(albumListView.getSelectionModel().getSelectedIndex(), newAlbumName);
+    }
+
+    public void createAlbum(String albumName) {
+        Album album = new Album(albumName);
+        user.createAlbum(albumName);
+        obsList.add(albumName);
+
     }
 
     // method to fix album names for directory modification
