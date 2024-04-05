@@ -36,6 +36,7 @@ public class LoginController {
         // check if there is a folder in /data/ with the username
         boolean folderExists = false;
         File usernames[] = new File("data").listFiles();
+        
         for (File f : usernames) {
             if (f.getName().equals(username)) {
                 folderExists = true;

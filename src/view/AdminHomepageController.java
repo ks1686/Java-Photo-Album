@@ -1,16 +1,15 @@
 package view;
 
 import java.io.File;
+import java.util.List;
 import java.util.Optional;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 
 import model.PhotoApp;
-import static model.PhotoApp.errorAlert;
 import static model.PhotoApp.infoAlert;
 
 public class AdminHomepageController {
@@ -31,6 +30,16 @@ public class AdminHomepageController {
         if (result.isPresent()) { 
             String username = result.get();
             // create a new folder in data/{username}
+            // get list of existing usernames from adminUserListController
+            List<String> existingUsernames = adminUserListController.obsList;
+            if (existingUsernames.contains(username)) {
+                infoAlert("Error", "Invalid Username", "User already exists.");
+                return;
+            }
+            if (username == null || username.equals("admin") || username.equals("")) {
+                infoAlert("Error", "Invalid Username", "Cannot create a user with the username '" + username + "'.");
+                return;
+            }
             File userDir = new File("data/" + username);
             userDir.mkdir();
             adminUserListController.obsList.add(username);
