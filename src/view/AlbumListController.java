@@ -85,7 +85,8 @@ public class AlbumListController {
 
     // method to delete the album
     public void deleteAlbum(String albumName) {
-        System.out.println("Deleting album: " + albumName); // print out the album name
+        user.getAlbums().remove(user.getAlbum(albumName));
+        obsList.remove(albumName);
     }
 
     // return to the login screen (use the PhotoApp class)
