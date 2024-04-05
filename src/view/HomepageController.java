@@ -1,5 +1,7 @@
 package view;
 
+import java.util.NoSuchElementException;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
@@ -50,7 +52,12 @@ public class HomepageController {
         dialog.setContentText("New album name:");
 
         // get the new album name
-        String newAlbumName = dialog.showAndWait().get();
+        String newAlbumName = null;
+        try {
+            newAlbumName = dialog.showAndWait().get();
+        } catch (NoSuchElementException e) {
+            return;
+        }
 
         // get the selected album
         String albumName = albumListController.getSelectedAlbum();
@@ -67,7 +74,12 @@ public class HomepageController {
         dialog.setHeaderText("Enter the name of the new album:");
         dialog.setContentText("Album name:");
 
-        String albumName = dialog.showAndWait().get();
+        String albumName = null;
+        try {
+            albumName = dialog.showAndWait().get();
+        } catch (NoSuchElementException e) {
+            return;
+        }
         if (albumName != null) {
             albumListController.createAlbum(albumName);
         }
