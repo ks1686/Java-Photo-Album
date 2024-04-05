@@ -9,12 +9,12 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomepageController">
    <fx:include fx:id="albumList" source="albumlist.fxml" />
-   <Button id="deleteAlbumButton" layoutX="334.0" layoutY="411.0" mnemonicParsing="false" onAction="#deleteAlbum" text="Delete Album" />
-   <Button id="logoutButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
-   <Button id="renameAlbumButton" layoutX="456.0" layoutY="411.0" mnemonicParsing="false" onAction="#renameAlbum" prefHeight="24.0" prefWidth="125.0" text="Rename Album" />
-   <Button id="createAlbumButton" layoutX="211.0" layoutY="411.0" mnemonicParsing="false" text="Create Album" />
-   <Button id="openAlbumButton" layoutX="100.0" layoutY="411.0" mnemonicParsing="false" text="Open Album" />
-   <TextField id="searchBarTextField" layoutX="99.0" layoutY="166.0" prefHeight="24.0" prefWidth="602.0" promptText="Search All Photos (hover for tooltip)">
+   <Button fx:id="deleteAlbumButton" layoutX="334.0" layoutY="411.0" mnemonicParsing="false" onAction="#deleteAlbum" text="Delete Album" />
+   <Button fx:id="logoutButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
+   <Button fx:id="renameAlbumButton" layoutX="456.0" layoutY="411.0" mnemonicParsing="false" onAction="#renameAlbum" prefHeight="24.0" prefWidth="125.0" text="Rename Album" />
+   <Button fx:id="createAlbumButton" layoutX="211.0" layoutY="411.0" mnemonicParsing="false" text="Create Album" />
+   <Button fx:id="openAlbumButton" layoutX="100.0" layoutY="411.0" mnemonicParsing="false" text="Open Album" />
+   <TextField fx:id="searchBarTextField" layoutX="99.0" layoutY="166.0" prefHeight="24.0" prefWidth="602.0" promptText="Search All Photos (hover for tooltip)">
       <tooltip>
          <Tooltip text="Enter a date or a tag to search by. Date format: MM-DD-YYYY. Tag format: tagname=tagvalue. Examples: &quot;04-05-2024&quot;, &quot;t1=v1&quot;, &quot;t1=v1 OR t2=v3&quot;, &quot;t1=v1 AND t2=v3&quot;. " />
       </tooltip>
