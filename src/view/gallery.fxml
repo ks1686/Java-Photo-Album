@@ -5,7 +5,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.GalleryController">
    <children>
-      <ScrollPane layoutY="100.0" prefHeight="300.0" prefWidth="600.0">
+      <ScrollPane prefHeight="300.0" prefWidth="600.0">
          <content>
             <fx:include fx:id="galleryView" source="galleryimageview.fxml" />
          </content></ScrollPane>

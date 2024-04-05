@@ -23,8 +23,13 @@ public class GalleryImageViewController  {
     private User user;
     private Album album;
 
+    // local variable to store the selected photo
+    private Photo selectedPhoto;
+
     // method to start the gallery image view controller
     public void start(Stage stage, Album album) {
+        // set the album
+        this.album = album;
 
         // get the photos from the album
         List<Photo> photos = album.getPhotos();
@@ -42,8 +47,8 @@ public class GalleryImageViewController  {
 
             // create an image view
             ImageView imageView = new ImageView(image);
-            imageView.setFitWidth(200);
-            imageView.setFitHeight(200);
+            imageView.setFitWidth(100);
+            imageView.setFitHeight(100);
             imageView.setPreserveRatio(true);
 
             // add the image view to the gallery image view
@@ -57,6 +62,10 @@ public class GalleryImageViewController  {
 
             // add event handler for selection
             imageView.setOnMouseClicked(e -> {
+
+                // set the selected photo
+                selectedPhoto = photos.get(index);
+
                 // get the photo
                 Photo photo = photos.get(index);
 
