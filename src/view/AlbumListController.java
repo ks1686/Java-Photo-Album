@@ -23,6 +23,7 @@ public class AlbumListController {
     @FXML ListView<String> albumListView;
     private ObservableList<String> obsList;
 
+
     // method to start the album list controller
     public void start(Stage stage, User user) {
 
@@ -78,25 +79,6 @@ public class AlbumListController {
 
     // return to the login screen (use the PhotoApp class)
     public void logout() {
-        // print out a message saying we are logging out of the user
-        // System.out.println("Logging out of user: " + username);
-
-        // return to the login screen
-        PhotoApp app = new PhotoApp();
-        try {
-            app.start(new Stage());
-        } catch (Exception e) {
-            e.printStackTrace();
-
-            // throw an alert pop-up saying that the login screen could not be returned to
-            errorAlert("Logout", "Failed to return to login screen", "Failed to return to login screen");
-        }
-
-        // create a success alert pop-up
-        // infoAlert("Logout", "Logged out", "Logged out of user: " + username);
-
-        // close the current stage
-        albumListView.getScene().getWindow().hide();
     }
 
     // method to rename an existing album

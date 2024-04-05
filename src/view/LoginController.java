@@ -55,7 +55,7 @@ public class LoginController {
             Pane root = loader.load();
             HomepageController homepageController = loader.getController();
             Stage stage = (Stage) usernameTextField.getScene().getWindow();
-            homepageController.start(stage, currentUser); // TODO: make a User object and pass that instead
+            homepageController.start(stage, currentUser, app); // TODO: make a User object and pass that instead
             Scene scene = new Scene(root, 800, 600);
             stage.setScene(scene);
             stage.show();
@@ -68,5 +68,7 @@ public class LoginController {
         }
 
     }
+
+
 
 }

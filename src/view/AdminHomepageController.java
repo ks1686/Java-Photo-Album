@@ -28,55 +28,70 @@ public class AdminHomepageController {
         adminUserListController.start(stage, app);
     }
 
+    // method to create a new user
     public void createUser() {
-        System.out.println("create user button clicked");
-        Stage stage = (Stage) createUserButton.getScene().getWindow();
-        Optional<String> result = showItemInputDialog(stage);
-        if (result.isPresent()) {  // TODO: make this use the User class
+        // print out a message saying we are creating a new user
+        System.out.println("Creating new user");
+        // show a dialog box to get the username of the new user
+        Optional<String> result = showItemInputDialog((Stage) createUserButton.getScene().getWindow());
+        // if the user entered a username (need to iterate through getUsers() to check if the username already exists)
+        if (result.isPresent()) {
             String username = result.get();
-            // get list of existing usernames from adminUserListController
-            for (User user : app.getUsers()) {
+            List<User> users = app.getUsers();
+            for (User user : users) {
                 if (user.getUsername().equals(username)) {
-                    infoAlert("Error", "Invalid Username", "User already exists.");
+                    // show an alert that the username already exists
+                    // errorAlert needs 3 arguments: title, header, and content
+                    PhotoApp.errorAlert("Error", "Username Already Exists", "The username you entered already exists. Please enter a different username.");
                     return;
                 }
             }
-
-            if (username == null || username.equals("admin") || username.equals("")) {
-                infoAlert("Error", "Invalid Username", "Cannot create a user with the username '" + username + "'.");
-                return;
-            }
-            
-            // create a new folder in data/users/{username} 
-            File userDir = new File("data/users/" + username);
-            userDir.mkdirs();
+            // create a new user with the entered username
+            User newUser = new User(username);
+            // add the user to the list of users
+            users.add(newUser);
+            // add the user to the list view
             adminUserListController.obsList.add(username);
-            User user = new User(username);
-            System.out.println("Adding user to app");
-            app.getUsers().add(user);
-            System.out.println("Length of users list: " + app.getUsers().size());
+            // create a new folder in data/users/ with the username
+            File userDir = new File("data/users/" + username);
+            userDir.mkdir();
+
+            // show an alert that the user was created successfully
+            infoAlert("User Created", "User Created Successfully", "The user " + username + " was created successfully.");
 
         }
+
 
     }
 
+    // deleting the currently selected user in the list view
     public void deleteUser() {
-        System.out.println("delete user button clicked");
-        // get the selected user from the list
-        // delete the folder data/{username}
-        String username = adminUserListController.adminUserListView.getSelectionModel().getSelectedItem();
+        // print out a message saying we are deleting a user
+        System.out.println("Deleting user");
+        // get the selected username from the list view
+        String selectedUsername = adminUserListController.adminUserListView.getSelectionModel().getSelectedItem();
 
-        if (username == null) {
-            return;
+        // if the selected username is not null
+        if (selectedUsername != null) {
+            // get the list of users
+            List<User> users = app.getUsers();
+            // iterate through the list of users
+            for (User user : users) {
+                // if the username of the user is the same as the selected username
+                if (user.getUsername().equals(selectedUsername)) {
+                    // remove the user from the list of users
+                    users.remove(user);
+                    // remove the user from the list view
+                    adminUserListController.obsList.remove(selectedUsername);
+                    // delete the folder in data/users/ with the username
+                    File userDir = new File("data/users/" + selectedUsername);
+                    recursiveDeleteDir(userDir);
+                    // show an alert that the user was deleted successfully
+                    infoAlert("User Deleted", "User Deleted Successfully", "The user " + selectedUsername + " was deleted successfully.");
+                    return;
+                }
+            }
         }
-
-        // remove the user from the list
-        adminUserListController.obsList.remove(username);
-
-        // delete the folder
-        File userDir = new File("data/" + username);
-        recursiveDeleteDir(userDir);
-
     }
 
     private void recursiveDeleteDir(File dir) {
@@ -105,25 +120,11 @@ public class AdminHomepageController {
     // method to logout
     @FXML
     public void logout() {
-        // print out a message saying we are logging out of the user
-        System.out.println("Logging out of admin");
-
-        // return to the login screen
-        PhotoApp app = new PhotoApp();
-        try {
-            app.start(new Stage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // show an alert that we have logged out
-        // infoAlert needs 3 arguments: title, header, and content
-        infoAlert("Logout", "Logout Successful", "You have successfully logged out of the admin account.");
-
+        // call the logout method in the PhotoApp class
+        app.logout(app);
         // close the current window
         Stage stage = (Stage) createUserButton.getScene().getWindow();
         stage.close();
-
     }
 
 }

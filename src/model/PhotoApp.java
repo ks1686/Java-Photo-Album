@@ -113,4 +113,33 @@ public class PhotoApp extends Application implements Serializable {
         alert.showAndWait();
     }
 
+    // logout method (do NOT create a new PhotoApp object)
+    public void logout(PhotoApp app) {
+        // save the app
+        try {
+            PhotoApp.writeApp(app);
+        } catch (Exception e) {
+            // show an alert that there was an error writing to the file
+            errorAlert("Error writing to file", "", "Error writing to file /data/data.dat");
+        }
+
+        // print out a message saying we are logging out of the admin
+        System.out.println("Logging out of current user");
+        // load the logincontroller.fxml file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
+        try {
+            Parent root = loader.load();
+            LoginController controller = loader.getController();
+            controller.setApp(this);
+            Stage stage = new Stage();
+            stage.setTitle("Photo Album");
+            stage.setScene(new Scene(root, 800, 600));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            // show an error alert that the login screen could not be returned to
+            errorAlert("Logout", "Failed to return to login screen", "Failed to return to login screen");
+        }
+    }
 }

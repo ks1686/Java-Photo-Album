@@ -5,13 +5,18 @@ import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 import model.User;
 
+import model.PhotoApp;
+
 
 public class HomepageController {
     @FXML
     protected AlbumListController albumListController;
 
-    public void start(Stage stage, User user) { // TODO: make a User object and pass that instead
+    private PhotoApp app;
+
+    public void start(Stage stage, User user, PhotoApp app) { // TODO: make a User object and pass that instead
         albumListController.start(stage, user);
+        this.app = app;
     }
 
     // method to delete an album
@@ -28,8 +33,10 @@ public class HomepageController {
     // method to log out
     @FXML
     private void logout() {
-        // go back to the login screen
-        albumListController.logout();
+        app.logout(app);
+        // close the current window
+        Stage stage = (Stage) albumListController.albumListView.getScene().getWindow();
+        stage.close();
     }
 
     // method to rename an album
