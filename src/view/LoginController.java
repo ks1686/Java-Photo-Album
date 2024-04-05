@@ -61,10 +61,8 @@ public class LoginController {
             stage.show();
             return;
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Invalid username");
-            alert.setHeaderText("The specified user does not exist. Please check your spelling and try again.");
-            alert.showAndWait();
+            // show an error alert that the user does not exist
+            PhotoApp.errorAlert("Login Error", "User does not exist", "User does not exist");
         }
 
     }

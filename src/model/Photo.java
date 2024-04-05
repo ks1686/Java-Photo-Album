@@ -5,8 +5,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.io.Serializable;
-import java.nio.file.Files; // idk if we can use this, just found this on google
-import java.nio.file.Path;
+import java.io.File;
+
 
 public class Photo implements Serializable {
 
@@ -16,9 +16,9 @@ public class Photo implements Serializable {
     private List<Map<String, String>> tags;
 
     public Photo(String filepath, String caption, List<Map<String, String>> tags) throws NullPointerException, IllegalArgumentException {
-        Path path = Path.of(filepath);
+        File file = new File(filepath);
 
-        if (!Files.exists(path)) {
+        if (!file.exists()) {
             throw new IllegalArgumentException("File does not exist");
         }
 
@@ -42,14 +42,11 @@ public class Photo implements Serializable {
             this.tags = tags;
         }
 
-    
         this.date = Calendar.getInstance(); // get the current date and time
-        this.date.setTimeInMillis(path.toFile().lastModified()); // set the date and time to the last modified date of the file
+        this.date.setTimeInMillis(file.lastModified()); // set the date and time to the last modified date of the file
 
         this.filepath = filepath;
         this.caption = caption;
-
-    
     }
 
     public Photo(String filepath) {
@@ -119,6 +116,7 @@ public class Photo implements Serializable {
             }
         }
     }
+
 
     public String toString() {
         return String.format("Photo: %s || Caption: %s || Date: %s || Tags: %s", filepath, caption, date, tags.toString());

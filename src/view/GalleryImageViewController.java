@@ -8,6 +8,7 @@ import model.PhotoApp;
 import model.User;
 import model.Album;
 import model.Photo;
+import javafx.scene.layout.TilePane;
 
 import java.util.List;
 
@@ -15,7 +16,18 @@ import java.util.List;
 
 public class GalleryImageViewController  {
 
-    @FXML private ImageView imageView;
+    @FXML private TilePane galleryImageView;
+
+    private PhotoApp app;
+    private User user;
+    private Album album;
+
+    // method to start the gallery image view controller
+    public void start(Stage stage, Album album) {
+        // ! Print status messages
+        System.out.println("test");
+
+    }
 
 
 }

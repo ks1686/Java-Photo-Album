@@ -1,10 +1,15 @@
 package view;
 
+import java.io.IOException;
 import java.util.NoSuchElementException;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import model.Album;
 import model.User;
 
 import model.PhotoApp;
@@ -16,9 +21,13 @@ public class HomepageController {
 
     private PhotoApp app;
 
+    // private user object
+    private User user;
+
     public void start(Stage stage, User user, PhotoApp app) { // TODO: make a User object and pass that instead
         albumListController.start(stage, user);
         this.app = app;
+        this.user = user;
     }
 
     // method to delete an album
@@ -90,8 +99,36 @@ public class HomepageController {
         // open a new window to search for photos
     }
 
-    @FXML public void openAlbum() {
-        // open a new window to view the selected album
+    @FXML public void openAlbum() throws IOException {
+        // open the selected album
+        String albumName = albumListController.getSelectedAlbum();
+        albumName = albumListController.fixAlbumName(albumName);
+
+        // get the album object
+        Album album = user.getAlbum(albumName);
+
+        // if the album is not null, open the album
+        if (album != null) {
+            // load the gallery controller
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/gallery.fxml"));
+            Pane root = loader.load();
+            GalleryController galleryController = loader.getController();
+
+            // get the current stage
+            Stage stage = (Stage) albumListController.albumListView.getScene().getWindow();
+            // start the gallery controller
+            galleryController.start(stage, app, album);
+            // set the scene
+            Scene scene = new Scene(root, 800, 600);
+            stage.setScene(scene);
+            stage.show();
+            return;
+        } else {
+            // show an error alert that the album could not be opened
+            PhotoApp.errorAlert("Open Album", "Failed to open album", "Failed to open album");
+        }
+
     }
 
 }
