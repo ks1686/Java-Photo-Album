@@ -8,7 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
+
 import model.PhotoApp;
+import static model.PhotoApp.errorAlert;
+import static model.PhotoApp.infoAlert;
 
 public class AdminHomepageController {
     @FXML
@@ -90,6 +93,10 @@ public class AdminHomepageController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // show an alert that we have logged out
+        // infoAlert needs 3 arguments: title, header, and content
+        infoAlert("Logout", "Logout Successful", "You have successfully logged out of the admin account.");
 
         // close the current window
         Stage stage = (Stage) createUserButton.getScene().getWindow();

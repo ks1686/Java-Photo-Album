@@ -10,8 +10,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-import javafx.scene.control.Alert;
+
 import model.PhotoApp;
+import static model.PhotoApp.errorAlert;
+import static model.PhotoApp.infoAlert;
 
 
 public class AlbumListController {
@@ -139,8 +141,12 @@ public class AlbumListController {
                 System.out.println("Failed to delete album directory: " + albumDir.getName());
 
                 // throw an alert pop-up saying that the album directory could not be deleted
-                alert("Delete Album", "Failed to delete album directory", "Failed to delete album directory: " + albumDir.getName());
+                errorAlert("Delete Album", "Failed to delete album directory", "Failed to delete album directory: " + albumDir.getName());
             }
+
+            // create a success alert pop-up
+            infoAlert("Delete Album", "Album deleted", "Album deleted: " + albumName);
+
 
             // refresh the list view
             start(new Stage(), username);
@@ -163,8 +169,11 @@ public class AlbumListController {
             e.printStackTrace();
 
             // throw an alert pop-up saying that the login screen could not be returned to
-            alert("Logout", "Failed to return to login screen", "Failed to return to login screen");
+            errorAlert("Logout", "Failed to return to login screen", "Failed to return to login screen");
         }
+
+        // create a success alert pop-up
+        infoAlert("Logout", "Logged out", "Logged out of user: " + username);
 
         // close the current stage
         albumListView.getScene().getWindow().hide();
@@ -186,7 +195,7 @@ public class AlbumListController {
             System.out.println("Album does not exist: " + albumName);
 
             // throw an alert pop-up saying that the album does not exist
-            alert("Rename Album", "Album does not exist", "The album does not exist: " + albumName);
+            errorAlert("Rename Album", "Album does not exist", "The album does not exist: " + albumName);
 
             return;
         }
@@ -196,7 +205,7 @@ public class AlbumListController {
             System.out.println("Album already exists: " + newAlbumName);
 
             // throw an alert pop-up saying that the album already exists
-            alert("Rename Album", "Album already exists", "The album already exists: " + newAlbumName);
+            errorAlert("Rename Album", "Album already exists", "The album already exists: " + newAlbumName);
 
             return;
         }
@@ -206,10 +215,13 @@ public class AlbumListController {
             System.out.println("Album renamed to: " + newAlbumName);
         } else {
             // throw an alert pop-up saying that the album could not be renamed
-            alert("Rename Album", "Failed to rename album", "Failed to rename album: " + albumName);
+            errorAlert("Rename Album", "Failed to rename album", "Failed to rename album: " + albumName);
 
             System.out.println("Failed to rename album: " + albumName);
         }
+
+        // create a success alert pop-up
+        infoAlert("Rename Album", "Album renamed", "Album renamed to: " + newAlbumName);
 
         // refresh the list view
         start(new Stage(), username);
@@ -225,12 +237,5 @@ public class AlbumListController {
         return albumName;
     }
 
-    // method to throw an alert pop-up
-    public void alert(String title, String header, String content) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
+
 }
