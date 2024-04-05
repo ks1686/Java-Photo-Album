@@ -50,6 +50,22 @@ public class GalleryImageViewController  {
             galleryImageView.getChildren().add(imageView);
         }
 
+        // add event handlers for selection to each image view
+        for (int i = 0; i < galleryImageView.getChildren().size(); i++) {
+            ImageView imageView = (ImageView) galleryImageView.getChildren().get(i);
+            int index = i;
+
+            // add event handler for selection
+            imageView.setOnMouseClicked(e -> {
+                // get the photo
+                Photo photo = photos.get(index);
+
+                // ! print the photo filepath to the console
+                System.out.println(photo.getFilePath());
+            });
+
+        }
+
     }
 
 }
