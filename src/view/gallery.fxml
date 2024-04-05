@@ -7,7 +7,7 @@
    <children>
       <ScrollPane layoutY="100.0" prefHeight="300.0" prefWidth="600.0">
          <content>
-            <fx:include fx:id="galleryImages" source="galleryimageview.fxml" />
+            <fx:include fx:id="galleryView" source="galleryimageview.fxml" />
          </content></ScrollPane>
    </children>
 </AnchorPane>

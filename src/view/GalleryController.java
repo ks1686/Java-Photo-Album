@@ -12,7 +12,7 @@ import java.util.List;
 
 
 public class GalleryController {
-    @FXML protected GalleryImageViewController galleryImageViewController;
+    @FXML protected GalleryImageViewController galleryViewController;
 
     private PhotoApp app;
 
@@ -20,7 +20,7 @@ public class GalleryController {
 
     // method to start the gallery controller
     public void start(Stage stage, PhotoApp app, Album album) {
-        galleryImageViewController.start(stage, album); // ! Error here, this.imageView is null
+        galleryViewController.start(stage, album);
         this.app = app;
         this.album = album;
     }
