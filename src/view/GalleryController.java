@@ -75,10 +75,6 @@ public class GalleryController {
             imageView.setPreserveRatio(true);
             imageView.setFitHeight(100);
 
-
-
-
-
             // ! print the image filepath to the console
             System.out.println(filepath);
 
@@ -104,7 +100,19 @@ public class GalleryController {
 
     @FXML
     public void removePhoto() {
-        // TODO: Implement removePhoto functionality
+        // get the selected photo
+        Photo selectedPhoto = galleryViewController.getSelectedPhoto();
+
+        // remove the photo from the album
+        album.removePhoto(selectedPhoto);
+
+
+        Stage stage = (Stage) removePhotoButton.getScene().getWindow();
+
+        // clear the gallery image view
+        galleryViewController.getGalleryImageView().getChildren().clear();
+        galleryViewController.start(stage, album);
+        // messy but works. could also do this for addphoto but it's not necessary
     }
 
     @FXML

@@ -29,6 +29,10 @@ public class GalleryImageViewController  {
     public void setSelectedPhoto(Photo photo) {
         this.selectedPhoto = photo;
     }
+
+    public Photo getSelectedPhoto() {
+        return this.selectedPhoto;
+    }
     
     // method to start the gallery image view controller
     public void start(Stage stage, Album album) {
