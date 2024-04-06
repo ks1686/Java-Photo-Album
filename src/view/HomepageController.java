@@ -118,7 +118,8 @@ public class HomepageController {
             // get the current stage
             Stage stage = (Stage) albumListController.albumListView.getScene().getWindow();
             // start the gallery controller
-            galleryController.start(stage, app, album);
+            
+            galleryController.start(stage, app, album, user);
             // set the scene
             Scene scene = new Scene(root, 800, 600);
             stage.setScene(scene);

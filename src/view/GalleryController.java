@@ -1,11 +1,14 @@
 package view;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -31,12 +34,18 @@ public class GalleryController {
     private PhotoApp app;
 
     private Album album;
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
 
     // method to start the gallery controller
-    public void start(Stage stage, PhotoApp app, Album album) {
+    public void start(Stage stage, PhotoApp app, Album album, User user) {
         galleryViewController.start(stage, album);
         this.app = app;
         this.album = album;
+        this.user=user;
     }
 
     @FXML
@@ -149,8 +158,28 @@ public class GalleryController {
     }
 
     @FXML
-    public void copyToAlbum() {
-        // TODO: Implement copyToAlbum functionality
+    public void copyToAlbum() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/choosealbum.fxml"));
+        Pane root = loader.load();
+        ChooseAlbumController chooseAlbumController = loader.getController();
+
+        // get the current stage
+        Stage stage = (Stage) galleryViewController.getGalleryImageView().getScene().getWindow();
+        // start the gallery controller
+        chooseAlbumController.start(stage, user);
+        // set the scene
+        // get the text from chooseAlbumController titleText
+        chooseAlbumController.setTitleText("Choose an Album");
+        // now set the buttons text to "Copy to Album"
+        chooseAlbumController.selectAlbumButton.setText("Copy to Album");
+        Scene scene = new Scene(root, 800, 600);
+        stage.setScene(scene);
+        stage.show();
+
+        // now somehow get the selected album from chooseAlbumController and then do the copyTo logic?
+
+        
     }
 
     @FXML
