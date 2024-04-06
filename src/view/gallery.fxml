@@ -24,5 +24,6 @@
             <Font size="69.0" />
          </font>
       </Text>
+      <Button fx:id="backToAlbums" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToHomepage" text="Back to Albums" />
    </children>
 </AnchorPane>

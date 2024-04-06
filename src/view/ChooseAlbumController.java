@@ -21,34 +21,43 @@ public class ChooseAlbumController {
     @FXML
     private Text titleText;
 
-    @FXML protected Button selectAlbumButton;
+    @FXML
+    protected Button selectAlbumButton;
 
-    @FXML protected AlbumListController albumListController;
+    @FXML
+    protected AlbumListController albumListController;
 
     private User user;
     private Album selectedAlbum;
 
-    public Album getSelectedAlbum(){
+    private PhotoApp app;
+    private Album currentAlbum;
+
+
+    public Album getSelectedAlbum() {
         return selectedAlbum;
     }
 
-    public void setTitleText(String text){
+    public void setTitleText(String text) {
         titleText.setText(text);
     }
 
-    public String getTitleText(){
+    public String getTitleText() {
         return titleText.getText();
     }
 
-    public void setAlbum(Album album){
+    public void setAlbum(Album album) {
         selectedAlbum = album;
     }
-    public void start(Stage stage, User user) {
+
+    public void start(Stage stage, User user, PhotoApp app, Album album) {
         this.user = user;
+        this.app = app;
+        this.currentAlbum = album;
         albumListController.start(stage, user);
     }
 
-    public void selectAlbum(){
+    public void selectAlbum() {
         String albumName = albumListController.getSelectedAlbum();
         for (Album album : user.getAlbums()) {
             if (album.getAlbumName().equals(albumName)) {
@@ -57,5 +66,26 @@ public class ChooseAlbumController {
             }
         }
     }
-   
+
+    // method to go back to the gallery view
+    @FXML
+    public void backToGallery() {
+        // get the current stage
+        Stage stage = (Stage) selectAlbumButton.getScene().getWindow();
+        // load the gallery.fxml file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/gallery.fxml"));
+        try {
+            Pane root = loader.load();
+            GalleryController galleryController = loader.getController();
+            galleryController.start(stage, this.app, this.currentAlbum, this.user);
+            Scene scene = new Scene(root, 800, 600);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            // show an alert if there's an error
+            PhotoApp.errorAlert("Error loading gallery", "Error loading gallery", "Error loading gallery");
+
+        }
+    }
 }

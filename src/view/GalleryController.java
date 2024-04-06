@@ -2,7 +2,6 @@ package view;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
@@ -23,7 +22,6 @@ import static model.PhotoApp.errorAlert;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.io.InputStream;
 
@@ -167,7 +165,7 @@ public class GalleryController {
         // get the current stage
         Stage stage = (Stage) galleryViewController.getGalleryImageView().getScene().getWindow();
         // start the gallery controller
-        chooseAlbumController.start(stage, user);
+        chooseAlbumController.start(stage, user, app, album);
         // set the scene
         // get the text from chooseAlbumController titleText
         chooseAlbumController.setTitleText("Choose an Album");
@@ -177,7 +175,7 @@ public class GalleryController {
         stage.setScene(scene);
         stage.show();
 
-        // now somehow get the selected album from chooseAlbumController and then do the copyTo logic?
+        // TODO: now somehow get the selected album from chooseAlbumController and then do the copyTo logic?
 
         
     }
@@ -187,6 +185,23 @@ public class GalleryController {
         // TODO: Implement moveToAlbum functionality
     }
 
-
+    // method to move back to the homepage controller
+    @FXML
+    public void backToHomepage() {
+        // get the current stage
+        Stage stage = (Stage) addPhotoButton.getScene().getWindow();
+        // load the homepage.fxml file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/homepage.fxml"));
+        try {
+            Pane root = loader.load();
+            HomepageController controller = loader.getController();
+            controller.start(stage, this.user, this.app);
+            stage.setScene(new Scene(root, 800, 600));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // show an error alert that the homepage screen could not be returned to
+            errorAlert("Back to Homepage", "Failed to return to homepage screen", "Failed to return to homepage screen");
+        }
+    }
 }
-
