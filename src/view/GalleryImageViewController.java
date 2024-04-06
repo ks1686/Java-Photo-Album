@@ -50,9 +50,6 @@ public class GalleryImageViewController  {
             String filepath = photo.getFilePath();
             Image image = new Image(new File(filepath).toURI().toString());
 
-            // ! print the image filepath to the console
-            System.out.println(filepath);
-
             // create an image view
             ImageView imageView = new ImageView(image);
             imageView.setFitWidth(100);

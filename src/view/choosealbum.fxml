@@ -13,7 +13,7 @@
             <Font size="51.0" />
          </font>
       </Text>
-      <Button fx:id="selectAlbumButton" layoutX="176.0" layoutY="438.0" mnemonicParsing="false" onAction="#selectAlbum" text="Copy To Selected Album">
+      <Button fx:id="copyPhotoToAlbumButton" layoutX="176.0" layoutY="438.0" mnemonicParsing="false" onAction="#copyPhotoToAlbum" text="Copy To Selected Album">
          <font>
             <Font size="33.0" />
          </font>

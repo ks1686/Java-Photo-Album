@@ -84,9 +84,6 @@ public class GalleryController {
             imageView.setPreserveRatio(true);
             imageView.setFitHeight(100);
 
-            // ! print the image filepath to the console
-            System.out.println(filepath);
-
     
             // add the image view to the gallery image view
             // first get the galleryImageView
@@ -95,9 +92,6 @@ public class GalleryController {
 
                 // set the selected photo
                 galleryViewController.setSelectedPhoto(photo);
-
-                // ! print the photo filepath to the console
-                System.out.println(photo.getFilePath());
             });
             galleryImageView.getChildren().add(imageView);
             
@@ -155,31 +149,30 @@ public class GalleryController {
         // should prob make a new scene or listview or something for this
     }
 
+    // move to the choose album controller to select an album to copy the photo to
     @FXML
-    public void copyToAlbum() throws IOException {
+    public void copyToAlbum()  {
+        // get the selected photo
+        Photo selectedPhoto = galleryViewController.getSelectedPhoto();
+        // load the choose album controller
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/view/choosealbum.fxml"));
-        Pane root = loader.load();
-        ChooseAlbumController chooseAlbumController = loader.getController();
-
-        // get the current stage
-        Stage stage = (Stage) galleryViewController.getGalleryImageView().getScene().getWindow();
-        // start the gallery controller
-        chooseAlbumController.start(stage, user, app, album);
-        // set the scene
-        // get the text from chooseAlbumController titleText
-        chooseAlbumController.setTitleText("Choose an Album");
-        // now set the buttons text to "Copy to Album"
-        chooseAlbumController.selectAlbumButton.setText("Copy to Album");
-        Scene scene = new Scene(root, 800, 600);
-        stage.setScene(scene);
-        stage.show();
-
-        // TODO: now somehow get the selected album from chooseAlbumController and then do the copyTo logic?
-
-        // on
-
-        
+        try {
+            Pane root = loader.load();
+            ChooseAlbumController chooseAlbumController = loader.getController();
+            // get the current stage
+            Stage stage = (Stage) copyToAlbumButton.getScene().getWindow();
+            // start the choose album controller
+            chooseAlbumController.start(stage, this.app, this.album, selectedPhoto, this.user);
+            // set the scene
+            Scene scene = new Scene(root, 800, 600);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // show an error alert that the choose album screen could not be loaded
+            errorAlert("Copy to Album", "Failed to load choose album screen", "Failed to load choose album screen");
+        }
     }
 
     @FXML

@@ -13,8 +13,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Album;
+import model.Photo;
 import model.PhotoApp;
 import model.User;
+
+import static model.PhotoApp.errorAlert;
 
 public class ChooseAlbumController {
 
@@ -32,39 +35,22 @@ public class ChooseAlbumController {
 
     private PhotoApp app;
     private Album currentAlbum;
+    private Photo selectedPhoto;
 
-
-    public Album getSelectedAlbum() {
-        return selectedAlbum;
-    }
-
-    public void setTitleText(String text) {
-        titleText.setText(text);
-    }
-
-    public String getTitleText() {
-        return titleText.getText();
-    }
-
-    public void setAlbum(Album album) {
-        selectedAlbum = album;
-    }
-
-    public void start(Stage stage, User user, PhotoApp app, Album album) {
-        this.user = user;
+    // method to start the controller
+    public void start(Stage stage, PhotoApp app, Album currentAlbum, Photo selectedPhoto, User user) {
         this.app = app;
-        this.currentAlbum = album;
+        this.currentAlbum = currentAlbum;
+        this.selectedPhoto = selectedPhoto;
+        this.user = user;
+        titleText.setText("Choose an album to copy the photo to");
         albumListController.start(stage, user, app);
-    }
 
-    public void selectAlbum() {
-        String albumName = albumListController.getSelectedAlbum();
-        for (Album album : user.getAlbums()) {
-            if (album.getAlbumName().equals(albumName)) {
-                selectedAlbum = album;
-                break;
-            }
-        }
+        // use the albumListView from the AlbumListController to get the selected album
+        albumListController.albumListView.setOnMouseClicked(event -> {
+
+            // TODO: GET THIS PART WORKING
+        });
     }
 
     // method to go back to the gallery view
@@ -84,9 +70,25 @@ public class ChooseAlbumController {
         } catch (Exception e) {
             e.printStackTrace();
             // show an alert if there's an error
-            PhotoApp.errorAlert("Error loading gallery", "Error loading gallery", "Error loading gallery");
+            errorAlert("Error loading gallery", "Error loading gallery", "Error loading gallery");
 
         }
     }
 
+    // method to copy the previously selected photo to the selected album
+    @FXML
+    public void copyPhotoToAlbum() {
+        // if the selected album is not null, copy the photo to the album
+        // ! SELECTED ALBUM HER IS NULL
+        if (selectedAlbum != null) {
+            selectedAlbum.addPhoto(selectedPhoto);
+            // show an info alert from the PhotoApp class
+            app.infoAlert("Photo Copied", "", "Photo copied to album " + selectedAlbum.getAlbumName());
+            // go back to the gallery view
+            backToGallery();
+        } else {
+            // show an error alert if the selected album is null
+            errorAlert("Error", "No album selected", "No album selected");
+        }
+    }
 }

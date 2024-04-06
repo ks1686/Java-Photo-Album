@@ -61,20 +61,12 @@ public class AlbumListController {
             albumName += " (" + numPhotos + " photos, " + startDateString + " - " + endDateString + ")";
             albumNames.add(albumName);
         }
-
-
-        System.out.println(albums); // print out the list of albums
-
         obsList = FXCollections.observableArrayList(albumNames); // create an observable list from the list of albums
         albumListView.setItems(obsList); // set the list view to the observable list
 
         albumListView.getSelectionModel().select(0); // select the first item in the list
 
         albumListView.getSelectionModel().selectedIndexProperty().addListener((obsList, oldVal, newVal) -> showItem(stage)); // add a listener to the list view
-
-        // print out albumListView's items
-        System.out.println("Albums: " + albumListView.getItems());
-
 
     }
 
@@ -89,14 +81,8 @@ public class AlbumListController {
 
     // method to delete the album
     public void deleteAlbum(String albumName) {
-
-
-
         user.getAlbums().remove(user.getAlbum(albumName));
         obsList.remove(albumName);
-
-        // ! debugging, print out the list of albums for user
-        System.out.println("Albums: " + user.getAlbums());
 
         infoAlert("Album Deleted", "" ,"Album " + albumName + " has been deleted.");
 
@@ -138,6 +124,25 @@ public class AlbumListController {
         if (albumName != null && !obsList.contains(albumName)) {
             user.createAlbum(albumName);
             obsList.add(albumName);
+
+            // load the homepage controller
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/homepage.fxml"));
+
+            Pane root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            HomepageController homepageController = loader.getController();
+            Stage stage = (Stage) albumListView.getScene().getWindow();
+            homepageController.start(stage, user, app);
+            Scene scene = new Scene(root, 800, 600);
+            stage.setScene(scene);
+            stage.show();
+
         } else {
             errorAlert("Error", "Invalid Album Name", "The album name is invalid.");
         }
