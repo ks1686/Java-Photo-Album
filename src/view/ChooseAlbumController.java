@@ -86,13 +86,11 @@ public class ChooseAlbumController {
     @FXML
     public void copyPhotoToAlbum() {
         // if the selected album is not null, copy the photo to the album
-        // ! SELECTED ALBUM HER IS NULL
         if (selectedAlbum != null) {
             selectedAlbum.addPhoto(selectedPhoto);
             // show an info alert from the PhotoApp class
             app.infoAlert("Photo Copied", "", "Photo copied to album " + selectedAlbum.getAlbumName());
             // go back to the gallery view
-            // ! ERROR OCCURS HERE AFTER PHOTO IS SUCCESSFULLY COPIED
             backToGallery();
         } else {
             // show an error alert if the selected album is null
