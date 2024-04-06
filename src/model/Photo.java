@@ -28,7 +28,7 @@ public class Photo implements Serializable {
             throw new IllegalArgumentException("filepath cannot be empty");
         }
 
-        if (!(filepath.endsWith(".bmp") || filepath.endsWith(".gif") || filepath.endsWith(".jpeg") || filepath.endsWith(".png"))) {
+        if (!(filepath.endsWith(".bmp") || filepath.endsWith(".gif") || filepath.endsWith(".jpeg") || filepath.endsWith(".png") || filepath.endsWith(".jpg"))) {
             throw new IllegalArgumentException("File must be a BMP, GIF, JPEG, or PNG file");
         }
 

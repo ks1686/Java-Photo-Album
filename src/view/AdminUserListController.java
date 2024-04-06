@@ -1,6 +1,5 @@
 package view;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,10 +15,8 @@ import model.User;
 public class AdminUserListController {
     @FXML ListView<String> adminUserListView;
     public ObservableList<String> obsList;
-    private PhotoApp app;
     
     public void start(Stage stage, PhotoApp app) {
-        this.app = app;
         List<String> users = new ArrayList<>();
         
         for (User user : app.getUsers()) {

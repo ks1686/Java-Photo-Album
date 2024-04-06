@@ -29,11 +29,16 @@ public class PhotoApp extends Application implements Serializable {
     }
 
     private void createStockUser(PhotoApp app) {
+        // get all the files in data/users/stock/photos/
+        File stockPhotos = new File("data/users/stock/photos");
+        File[] photos = stockPhotos.listFiles();
+
+        
         User stockUser = new User("stock");
         stockUser.createAlbum("stock");
-        stockUser.getAlbum("stock").addPhoto("data/users/stock/photos/photo1.png");
-        stockUser.getAlbum("stock").addPhoto("data/users/stock/photos/photo2.jpeg");
-        // TODO: add more photos (we need 5-10 total)
+        for (File photo : photos) {
+            stockUser.getAlbum("stock").addPhoto(photo.getAbsolutePath());
+        }
         app.userList.add(stockUser);
     }
 

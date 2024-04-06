@@ -1,9 +1,7 @@
 package view;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -12,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import model.Album;
-import model.PhotoApp;
 import model.User;
 
 import static model.PhotoApp.errorAlert;

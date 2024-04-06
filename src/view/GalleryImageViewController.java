@@ -26,6 +26,10 @@ public class GalleryImageViewController  {
     // local variable to store the selected photo
     private Photo selectedPhoto;
 
+    public void setSelectedPhoto(Photo photo) {
+        this.selectedPhoto = photo;
+    }
+    
     // method to start the gallery image view controller
     public void start(Stage stage, Album album) {
         // set the album
@@ -75,6 +79,10 @@ public class GalleryImageViewController  {
 
         }
 
+    }
+
+    public TilePane getGalleryImageView() {
+        return galleryImageView;
     }
 
 }
