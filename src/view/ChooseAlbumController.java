@@ -46,10 +46,17 @@ public class ChooseAlbumController {
         titleText.setText("Choose an album to copy the photo to");
         albumListController.start(stage, user, app);
 
-        // use the albumListView from the AlbumListController to get the selected album
-        albumListController.albumListView.setOnMouseClicked(event -> {
 
-            // TODO: GET THIS PART WORKING
+        // set the selected album to the album selected in the album list controller
+        albumListController.albumListView.setOnMouseClicked(e -> {
+            String albumName = albumListController.albumListView.getSelectionModel().getSelectedItem();
+            albumName = albumListController.fixAlbumName(albumName);
+            List<Album> albums = user.getAlbums();
+            for (Album album : albums) {
+                if (album.getAlbumName().equals(albumName)) {
+                    selectedAlbum = album;
+                }
+            }
         });
     }
 
@@ -85,6 +92,7 @@ public class ChooseAlbumController {
             // show an info alert from the PhotoApp class
             app.infoAlert("Photo Copied", "", "Photo copied to album " + selectedAlbum.getAlbumName());
             // go back to the gallery view
+            // ! ERROR OCCURS HERE AFTER PHOTO IS SUCCESSFULLY COPIED
             backToGallery();
         } else {
             // show an error alert if the selected album is null
