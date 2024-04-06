@@ -54,7 +54,7 @@ public class ChooseAlbumController {
         this.user = user;
         this.app = app;
         this.currentAlbum = album;
-        albumListController.start(stage, user);
+        albumListController.start(stage, user, app);
     }
 
     public void selectAlbum() {
@@ -88,4 +88,5 @@ public class ChooseAlbumController {
 
         }
     }
+
 }

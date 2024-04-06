@@ -1,5 +1,6 @@
 package view;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -7,9 +8,13 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Album;
+import model.PhotoApp;
 import model.User;
 
 import static model.PhotoApp.errorAlert;
@@ -20,13 +25,15 @@ public class AlbumListController {
     @FXML ListView<String> albumListView;
     private ObservableList<String> obsList;
     private User user;
+    private PhotoApp app;
 
     // method to start the album list controller
-    public void start(Stage stage, User user) {
+    public void start(Stage stage, User user, PhotoApp app) {
 
         List<Album> albums = user.getAlbums();
         List<String> albumNames = new ArrayList<>();
         this.user = user;
+        this.app = app;
 
         // add the number of photos in each album to the list and the range of dates
         for (int i = 0; i < albums.size(); i++) {
@@ -82,24 +89,58 @@ public class AlbumListController {
 
     // method to delete the album
     public void deleteAlbum(String albumName) {
+
+
+
         user.getAlbums().remove(user.getAlbum(albumName));
         obsList.remove(albumName);
+
+        // ! debugging, print out the list of albums for user
+        System.out.println("Albums: " + user.getAlbums());
+
+        infoAlert("Album Deleted", "" ,"Album " + albumName + " has been deleted.");
+
+
+        // load the homepage controller
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/homepage.fxml"));
+
+        Pane root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        HomepageController homepageController = loader.getController();
+        Stage stage = (Stage) albumListView.getScene().getWindow();
+        homepageController.start(stage, user, app);
+        Scene scene = new Scene(root, 800, 600);
+        stage.setScene(scene);
+        stage.show();
     }
 
-    // return to the login screen (use the PhotoApp class)
-    public void logout() {
-    }
 
     // method to rename an existing album
     public void renameAlbum(String albumName, String newAlbumName) {
-        user.getAlbum(albumName).setAlbumName(newAlbumName);
-        obsList.set(albumListView.getSelectionModel().getSelectedIndex(), newAlbumName);
+        // rename the album if the new album name is not null and doesn't already exist
+        if (newAlbumName != null && !obsList.contains(newAlbumName)) {
+            user.getAlbum(albumName).setAlbumName(newAlbumName);
+            obsList.set(albumListView.getSelectionModel().getSelectedIndex(), newAlbumName);
+        } else {
+            errorAlert("Error", "Invalid Album Name", "The album name is invalid.");
+        }
     }
 
     public void createAlbum(String albumName) {
         Album album = new Album(albumName);
-        user.createAlbum(albumName);
-        obsList.add(albumName);
+        // if the album name is not null and doesn't already exist, create the album
+        if (albumName != null && !obsList.contains(albumName)) {
+            user.createAlbum(albumName);
+            obsList.add(albumName);
+        } else {
+            errorAlert("Error", "Invalid Album Name", "The album name is invalid.");
+        }
 
     }
 

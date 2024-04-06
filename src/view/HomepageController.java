@@ -25,7 +25,7 @@ public class HomepageController {
     private User user;
 
     public void start(Stage stage, User user, PhotoApp app) { // TODO: make a User object and pass that instead
-        albumListController.start(stage, user);
+        albumListController.start(stage, user, app);
         this.app = app;
         this.user = user;
     }
@@ -35,10 +35,15 @@ public class HomepageController {
     private void deleteAlbum() {
         String albumName = albumListController.getSelectedAlbum();
 
+        // fix the album name
+        albumName = albumListController.fixAlbumName(albumName);
+
         // if album is not null, delete the album
         if (albumName != null) {
             albumListController.deleteAlbum(albumName);
         }
+
+
     }
 
     // method to log out

@@ -177,6 +177,8 @@ public class GalleryController {
 
         // TODO: now somehow get the selected album from chooseAlbumController and then do the copyTo logic?
 
+        // on
+
         
     }
 
