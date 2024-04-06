@@ -17,7 +17,10 @@ import model.Photo;
 import static model.PhotoApp.errorAlert;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
+import java.io.InputStream;
 
 
 public class GalleryController {
@@ -54,9 +57,7 @@ public class GalleryController {
 
     @FXML
     private Button moveToAlbumButton;
-
-   @FXML
-    public void addPhoto() {
+    public void addPhoto() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         File file = fileChooser.showOpenDialog(null);
@@ -65,21 +66,26 @@ public class GalleryController {
             Photo photo = new Photo(filepath);
             album.addPhoto(photo);
             
-            Image image = new Image(new File(filepath).toURI().toString());
+            // Image image = new Image(new File(filepath).toURI().toString());
+            InputStream stream = new FileInputStream(filepath);
+            Image image = new Image(stream);
+            ImageView imageView = new ImageView();
+            imageView.setImage(image);
+            imageView.setFitWidth(100);
+            imageView.setPreserveRatio(true);
+            imageView.setFitHeight(100);
+
+
+
+
 
             // ! print the image filepath to the console
             System.out.println(filepath);
 
-            // create an image view
-            ImageView imageView = new ImageView(image);
-            imageView.setFitWidth(100);
-            imageView.setFitHeight(100);
-            imageView.setPreserveRatio(true);
-
+    
             // add the image view to the gallery image view
             // first get the galleryImageView
             TilePane galleryImageView = galleryViewController.getGalleryImageView();
-            galleryImageView.getChildren().add(imageView);
             imageView.setOnMouseClicked(e -> {
 
                 // set the selected photo
@@ -88,6 +94,8 @@ public class GalleryController {
                 // ! print the photo filepath to the console
                 System.out.println(photo.getFilePath());
             });
+            galleryImageView.getChildren().add(imageView);
+            
         } else {
             errorAlert("Invalid image", null, null);
         }
