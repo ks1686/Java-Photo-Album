@@ -3,6 +3,7 @@ package view;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
@@ -20,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.io.InputStream;
 
 
@@ -118,6 +120,21 @@ public class GalleryController {
     @FXML
     public void setCaption() {
         // TODO: Implement setCaption functionality
+        Photo selectedPhoto = galleryViewController.getSelectedPhoto();
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Set caption");
+        dialog.setHeaderText("Enter new caption (leave empty to delete caption):");
+        dialog.setContentText("Enter caption:");
+
+        // get the new album name
+        String caption = null;
+        try {
+            caption = dialog.showAndWait().get();
+        } catch (NoSuchElementException e) {
+            return;
+        }
+
+        selectedPhoto.setCaption(caption);
     }
 
     @FXML
@@ -128,6 +145,7 @@ public class GalleryController {
     @FXML
     public void editTags() {
         // TODO: Implement editTags functionality
+        // should prob make a new scene or listview or something for this
     }
 
     @FXML
