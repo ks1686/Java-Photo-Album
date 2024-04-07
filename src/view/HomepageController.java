@@ -15,7 +15,7 @@ import model.Album;
 import model.Photo;
 import model.User;
 
-import model.PhotoApp;
+import model.Photos;
 
 
 public class HomepageController {
@@ -23,12 +23,12 @@ public class HomepageController {
     protected AlbumListController albumListController;
 
     @FXML protected TextField searchBarTextField;
-    private PhotoApp app;
+    private Photos app;
 
     // private user object
     private User user;
 
-    public void start(Stage stage, User user, PhotoApp app) { // TODO: make a User object and pass that instead
+    public void start(Stage stage, User user, Photos app) { // TODO: make a User object and pass that instead
         albumListController.start(stage, user, app);
         this.app = app;
         this.user = user;
@@ -84,7 +84,7 @@ public class HomepageController {
         if (albumName != null && newAlbumName != null) {
             albumListController.renameAlbum(albumName, newAlbumName);
         } else {
-            PhotoApp.errorAlert("Error", "Invalid Album Name", "The album name is invalid.");
+            Photos.errorAlert("Error", "Invalid Album Name", "The album name is invalid.");
         }
     }
 
@@ -122,13 +122,13 @@ public class HomepageController {
         // string in the text bar
         String query = searchBarTextField.getText();
         if (!(isValidSearchQuery(query))){
-            PhotoApp.errorAlert("Invalid Search Query", "Invalid Search Query", "Invalid Search Query");
+            Photos.errorAlert("Invalid Search Query", "Invalid Search Query", "Invalid Search Query");
             return;
         }
         List<Photo> photos = user.searchAlbums(query);
 
         if (photos == null) {
-            PhotoApp.errorAlert("Search Error", "Search query is invalid. ", "Hover over search bar and see the tooltip for more information.");
+            Photos.errorAlert("Search Error", "Search query is invalid. ", "Hover over search bar and see the tooltip for more information.");
             return;
         }
         
@@ -199,7 +199,7 @@ public class HomepageController {
             return;
         } else {
             // show an error alert that the album could not be opened
-            PhotoApp.errorAlert("Open Album", "Failed to open album", "Failed to open album");
+            Photos.errorAlert("Open Album", "Failed to open album", "Failed to open album");
         }
 
     }

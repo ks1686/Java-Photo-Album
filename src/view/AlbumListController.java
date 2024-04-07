@@ -14,21 +14,21 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Album;
-import model.PhotoApp;
+import model.Photos;
 import model.User;
 
-import static model.PhotoApp.errorAlert;
-import static model.PhotoApp.infoAlert;
+import static model.Photos.errorAlert;
+import static model.Photos.infoAlert;
 
 
 public class AlbumListController {
     @FXML ListView<String> albumListView;
     private ObservableList<String> obsList;
     private User user;
-    private PhotoApp app;
+    private Photos app;
 
     // method to start the album list controller
-    public void start(Stage stage, User user, PhotoApp app) {
+    public void start(Stage stage, User user, Photos app) {
 
         List<Album> albums = user.getAlbums();
         List<String> albumNames = new ArrayList<>();

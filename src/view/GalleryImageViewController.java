@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import model.PhotoApp;
+import model.Photos;
 import model.User;
 import model.Album;
 import model.Photo;
@@ -19,7 +19,7 @@ public class GalleryImageViewController  {
 
     @FXML private TilePane galleryImageView;
 
-    private PhotoApp app;
+    private Photos app;
     private User user;
     private Album album;
 

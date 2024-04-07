@@ -9,10 +9,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 
-import model.PhotoApp;
+import model.Photos;
 import model.User;
 
-import static model.PhotoApp.infoAlert;
+import static model.Photos.infoAlert;
 
 public class AdminHomepageController {
     @FXML
@@ -21,9 +21,9 @@ public class AdminHomepageController {
     @FXML Button createUserButton;
     @FXML Button deleteUserButton;
 
-    private PhotoApp app;
+    private Photos app;
 
-    public void start(Stage stage, PhotoApp app) {
+    public void start(Stage stage, Photos app) {
         this.app = app;
         adminUserListController.start(stage, app);
     }
@@ -42,7 +42,7 @@ public class AdminHomepageController {
                 if (user.getUsername().equals(username)) {
                     // show an alert that the username already exists
                     // errorAlert needs 3 arguments: title, header, and content
-                    PhotoApp.errorAlert("Error", "Username Already Exists", "The username you entered already exists. Please enter a different username.");
+                    Photos.errorAlert("Error", "Username Already Exists", "The username you entered already exists. Please enter a different username.");
                     return;
                 }
             }

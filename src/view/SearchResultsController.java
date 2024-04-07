@@ -1,6 +1,6 @@
 package view;
 
-import static model.PhotoApp.errorAlert;
+import static model.Photos.errorAlert;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Album;
 import model.Photo;
-import model.PhotoApp;
+import model.Photos;
 import model.User;
 public class SearchResultsController {
 
@@ -25,13 +25,13 @@ public class SearchResultsController {
 
     @FXML private GalleryImageViewController galleryViewController;
 
-    private PhotoApp app;
+    private Photos app;
     private User user;
     private Album searchResultsAlbum;
 
 
     @FXML
-    public void start(Scene scene, PhotoApp app, User currentUser, Album searchResultsAlbum) {
+    public void start(Scene scene, Photos app, User currentUser, Album searchResultsAlbum) {
         Stage stage = (Stage) createAlbumButton.getScene().getWindow();
         this.app = app;
         this.user = currentUser;

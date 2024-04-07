@@ -11,10 +11,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Album;
 import model.Photo;
-import model.PhotoApp;
+import model.Photos;
 import model.User;
 
-import static model.PhotoApp.errorAlert;
+import static model.Photos.errorAlert;
 
 public class ChooseAlbumController {
 
@@ -30,12 +30,12 @@ public class ChooseAlbumController {
     private User user;
     private Album selectedAlbum;
 
-    private PhotoApp app;
+    private Photos app;
     private Album currentAlbum;
     private Photo selectedPhoto;
 
     // method to start the controller
-    public void start(Stage stage, PhotoApp app, Album currentAlbum, Photo selectedPhoto, User user) {
+    public void start(Stage stage, Photos app, Album currentAlbum, Photo selectedPhoto, User user) {
         this.app = app;
         this.currentAlbum = currentAlbum;
         this.selectedPhoto = selectedPhoto;
@@ -103,10 +103,10 @@ public class ChooseAlbumController {
 
         if (buttonText.equals("Copy to Album")) {
             copyToAlbum(selectedPhoto, selectedAlbum);
-            PhotoApp.infoAlert("Photo Copied", "", "Photo copied to album " + selectedAlbum.getAlbumName());
+            Photos.infoAlert("Photo Copied", "", "Photo copied to album " + selectedAlbum.getAlbumName());
         } else if (buttonText.equals("Move to Album")) {
             moveToAlbum(selectedPhoto, currentAlbum, selectedAlbum);
-            PhotoApp.infoAlert("Photo moved", "", "Photo moved to album " + selectedAlbum.getAlbumName());
+            Photos.infoAlert("Photo moved", "", "Photo moved to album " + selectedAlbum.getAlbumName());
         }
         backToGallery();
 

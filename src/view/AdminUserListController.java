@@ -9,14 +9,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-import model.PhotoApp;
+import model.Photos;
 import model.User;
 
 public class AdminUserListController {
     @FXML ListView<String> adminUserListView;
     public ObservableList<String> obsList;
     
-    public void start(Stage stage, PhotoApp app) {
+    public void start(Stage stage, Photos app) {
         List<String> users = new ArrayList<>();
         
         for (User user : app.getUsers()) {

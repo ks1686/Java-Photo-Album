@@ -5,31 +5,26 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import model.PhotoApp;
+import model.Photos;
 import model.User;
 import model.Album;
 import model.Photo;
 
-import static model.PhotoApp.errorAlert;
+import static model.Photos.errorAlert;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.NoSuchElementException;
-import java.io.InputStream;
 
 
 public class GalleryController {
     @FXML protected GalleryImageViewController galleryViewController;
 
-    private PhotoApp app;
+    private Photos app;
 
     private Album album;
     private User user;
@@ -39,7 +34,7 @@ public class GalleryController {
     }
 
     // method to start the gallery controller
-    public void start(Stage stage, PhotoApp app, Album album, User user) {
+    public void start(Stage stage, Photos app, Album album, User user) {
         galleryViewController.start(stage, album);
         this.app = app;
         this.album = album;

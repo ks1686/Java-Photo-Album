@@ -16,7 +16,7 @@ import javafx.scene.control.Alert;
 
 // TODO: remove all print statements before submitting
 
-public class PhotoApp extends Application implements Serializable {
+public class Photos extends Application implements Serializable {
 
     public static final String storeDir = "data";
     public static final String storeFile = "data.dat";
@@ -28,7 +28,7 @@ public class PhotoApp extends Application implements Serializable {
         return userList;
     }
 
-    private void createStockUser(PhotoApp app) {
+    private void createStockUser(Photos app) {
         // get all the files in data/users/stock/photos/
         File stockPhotos = new File("data/users/stock/photos");
         File[] photos = stockPhotos.listFiles();
@@ -44,12 +44,12 @@ public class PhotoApp extends Application implements Serializable {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        PhotoApp app;
+        Photos app;
         try {
-            app = PhotoApp.readApp();
+            app = Photos.readApp();
         } catch (Exception e) {
             // if there's no data.dat file made, create a new PhotoApp and create stock user
-            app = new PhotoApp();
+            app = new Photos();
             app.userList = new ArrayList<>();
             createStockUser(app);
         }
@@ -61,7 +61,7 @@ public class PhotoApp extends Application implements Serializable {
 
         primaryStage.setTitle("Photo Album");
         primaryStage.setScene(new Scene(root, 800, 600));
-        final PhotoApp finalApp = app; // doesn't work without this for some reason
+        final Photos finalApp = app; // doesn't work without this for some reason
 
         // if user presses the X button, save the state of the app (this will save all Users, Albums, Photo objects)
         primaryStage.setOnCloseRequest((EventHandler<WindowEvent>) new EventHandler<WindowEvent>() {
@@ -69,7 +69,7 @@ public class PhotoApp extends Application implements Serializable {
             public void handle(WindowEvent event) {
                 
                 try {
-                    PhotoApp.writeApp(finalApp);
+                    Photos.writeApp(finalApp);
                 } catch (IOException e) {
                     errorAlert("Error writing to file", "", "Error writing to file /data/data.dat");
                 }
@@ -80,15 +80,15 @@ public class PhotoApp extends Application implements Serializable {
         
     }
 
-    public static void writeApp(PhotoApp app) throws IOException {
+    public static void writeApp(Photos app) throws IOException {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storeDir + File.separator + storeFile));
         oos.writeObject(app);
         oos.close();
     }
 
-    public static PhotoApp readApp() throws IOException, ClassNotFoundException {
+    public static Photos readApp() throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream(storeDir + File.separator + storeFile));
-        PhotoApp app = (PhotoApp) ois.readObject();
+        Photos app = (Photos) ois.readObject();
         ois.close();
         return app;
     }
@@ -119,10 +119,10 @@ public class PhotoApp extends Application implements Serializable {
     }
 
     // logout method (do NOT create a new PhotoApp object)
-    public void logout(PhotoApp app) {
+    public void logout(Photos app) {
         // save the app
         try {
-            PhotoApp.writeApp(app);
+            Photos.writeApp(app);
         } catch (Exception e) {
             // show an alert that there was an error writing to the file
             errorAlert("Error writing to file", "", "Error writing to file /data/data.dat");
@@ -152,7 +152,7 @@ public class PhotoApp extends Application implements Serializable {
         // save the app 
         // TODO: test and make sure this actually saves the data
         try {
-            PhotoApp.writeApp(this);
+            Photos.writeApp(this);
         } catch (Exception e) {
             // show an alert that there was an error writing to the file
             errorAlert("Error writing to file", "", "Error writing to file /data/data.dat");

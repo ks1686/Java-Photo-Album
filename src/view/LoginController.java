@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import model.PhotoApp;
+import model.Photos;
 import model.User;
 
 public class LoginController {
@@ -15,9 +15,9 @@ public class LoginController {
     @FXML
     private TextField usernameTextField;
 
-    private PhotoApp app;
+    private Photos app;
 
-    public void setApp(PhotoApp app) {
+    public void setApp(Photos app) {
         this.app = app;
     }
 
@@ -61,7 +61,7 @@ public class LoginController {
             return;
         } else {
             // show an error alert that the user does not exist
-            PhotoApp.errorAlert("Login Error", "User does not exist", "User does not exist");
+            Photos.errorAlert("Login Error", "User does not exist", "User does not exist");
         }
 
     }

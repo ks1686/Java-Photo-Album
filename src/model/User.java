@@ -53,7 +53,7 @@ public class User implements Serializable {
 
         for (Album a : albums) {
             if (a.getAlbumName().equals(albumName)) {
-                PhotoApp.errorAlert("An album with this name already exists", "", "Please choose a different name and try again.");;
+                Photos.errorAlert("An album with this name already exists", "", "Please choose a different name and try again.");;
             }
         }
 
