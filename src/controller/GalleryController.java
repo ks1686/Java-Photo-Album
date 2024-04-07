@@ -131,7 +131,24 @@ public class GalleryController {
 
     @FXML
     public void displaySeparately() {
-        // TODO: Implement displaySeparately functionality
+        // get the selected photo
+        Photo selectedPhoto = galleryViewController.getSelectedPhoto();
+        // load the separate photo display controller without closing the current window
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/separatephotodisplay.fxml"));
+        try {
+            Pane root = loader.load();
+            SeparatePhotoDisplayController separatePhotoDisplayController = loader.getController();
+            Stage stage = (Stage) displaySeparatelyButton.getScene().getWindow();
+            separatePhotoDisplayController.start(stage, this.app, this.album, selectedPhoto, this.user);
+            Scene scene = new Scene(root, 800, 600);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // show an error alert that the separate photo display screen could not be loaded
+            errorAlert("Display Separately", "Failed to load separate photo display screen", "Failed to load separate photo display screen");
+        }
     }
 
     @FXML
