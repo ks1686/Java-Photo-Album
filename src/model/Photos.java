@@ -11,7 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import view.LoginController;
+import controller.LoginController;
 import javafx.scene.control.Alert;
 
 // TODO: remove all print statements before submitting
