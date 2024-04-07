@@ -30,8 +30,6 @@ public class AdminHomepageController {
 
     // method to create a new user
     public void createUser() {
-        // print out a message saying we are creating a new user
-        System.out.println("Creating new user");
         // show a dialog box to get the username of the new user
         Optional<String> result = showItemInputDialog((Stage) createUserButton.getScene().getWindow());
         // if the user entered a username (need to iterate through getUsers() to check if the username already exists)
@@ -66,8 +64,6 @@ public class AdminHomepageController {
 
     // deleting the currently selected user in the list view
     public void deleteUser() {
-        // print out a message saying we are deleting a user
-        System.out.println("Deleting user");
         // get the selected username from the list view
         String selectedUsername = adminUserListController.adminUserListView.getSelectionModel().getSelectedItem();
 

@@ -128,8 +128,6 @@ public class Photos extends Application implements Serializable {
             errorAlert("Error writing to file", "", "Error writing to file /data/data.dat");
         }
 
-        // print out a message saying we are logging out of the admin
-        System.out.println("Logging out of current user");
         // load the logincontroller.fxml file
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
         try {

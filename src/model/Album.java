@@ -125,7 +125,6 @@ public class Album implements Serializable {
         List<Photo> result = new ArrayList<>();
         // date will be in the format MM/DD/YYYY-MM/DD/YYYY
         if (query.matches("\\d{2}/\\d{2}/\\d{4}-\\d{2}/\\d{2}/\\d{4}")) {
-            System.out.println("query is a date");
             // query is a date
             String[] dates = query.split("-");
             // dates are in the format MM/DD/YYYY. make calendar objects for them
@@ -171,7 +170,6 @@ public class Album implements Serializable {
 
         // if the query is a single tag
         if (parts.length == 1) {
-            System.out.println("query is a single tag");
             // check if its of the form "tagname=tagvalue"
 
             String[] tag = query.split("=");
@@ -193,7 +191,6 @@ public class Album implements Serializable {
         } else if (parts.length == 2) {
             // if the query is a disjunction
             if (query.contains(" OR ")) {
-                System.out.println("Query is a tag disjunction");
                 String[] tag1 = parts[0].split("=");
                 String[] tag2 = parts[1].split("=");
                 if (tag1[0].contains(" ") || tag1[1].contains(" ")) {
@@ -220,7 +217,6 @@ public class Album implements Serializable {
                 return result;
             } else if (query.contains(" AND ")) {
                 // if the query is a conjunction
-                System.out.println("Query is a tag conjunction");
                 String[] tag1 = parts[0].split("=");
                 String[] tag2 = parts[1].split("=");
                 for (Photo photo : this.photos) {
@@ -243,7 +239,6 @@ public class Album implements Serializable {
 
         }
 
-        System.out.println("Query is something else, throwing exception");
         throw new IllegalArgumentException("Invalid query");
     }
 

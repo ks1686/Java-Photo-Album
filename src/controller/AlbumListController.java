@@ -66,12 +66,6 @@ public class AlbumListController {
 
         albumListView.getSelectionModel().select(0); // select the first item in the list
 
-        albumListView.getSelectionModel().selectedIndexProperty().addListener((obsList, oldVal, newVal) -> showItem(stage)); // add a listener to the list view
-
-    }
-
-    private void showItem(Stage mainstage) {
-        System.out.println("Selected item: " + albumListView.getSelectionModel().getSelectedItem()); // print out the selected item
     }
 
     // method to return the selected album
@@ -115,7 +109,6 @@ public class AlbumListController {
         // rename if new name isn't null, doesn't match the albumName, and doesn't already exist
         if (newAlbumName != null && !newAlbumName.equals(albumName) && !obsList.contains(newAlbumName)){
             user.getAlbum(albumName).setAlbumName(newAlbumName);
-            System.out.println("Status 3");
             obsList.set(albumListView.getSelectionModel().getSelectedIndex(), newAlbumName);
 
             // load the homepage controller

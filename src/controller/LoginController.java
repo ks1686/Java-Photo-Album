@@ -31,7 +31,6 @@ public class LoginController {
             Pane root = loader.load();
             AdminHomepageController adminController = loader.getController();
             Stage stage = (Stage) usernameTextField.getScene().getWindow();
-            System.out.println("Before going into admin, app has " + app.getUsers().size() + " users.");
             adminController.start(stage, this.app);
             Scene scene = new Scene(root, 800, 600);
             stage.setScene(scene);
@@ -41,7 +40,6 @@ public class LoginController {
 
         // check if there is a user in app.userList with the given username
         User currentUser = null;
-        System.out.println("app has " + app.getUsers().size() + " users.");
         for (User user : app.getUsers()) {
             if (user.getUsername().equals(username)) {
                 currentUser = user;
