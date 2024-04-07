@@ -44,6 +44,12 @@ public class Photo implements Serializable {
 
         this.date = Calendar.getInstance(); // get the current date and time
         this.date.setTimeInMillis(file.lastModified()); // set the date and time to the last modified date of the file
+        // set milliseconds and seconds and hour and minute to 0
+        this.date.set(Calendar.MILLISECOND, 0);
+        this.date.set(Calendar.SECOND, 0);
+        this.date.set(Calendar.HOUR, 0);
+        this.date.set(Calendar.MINUTE, 0);
+
 
         this.filepath = filepath;
         this.caption = caption;

@@ -35,6 +35,31 @@ public class GalleryImageViewController  {
     }
     
     // method to start the gallery image view controller
+    protected void addToGallery(Photo photo) {
+        // get the photo
+        String filepath = photo.getFilePath();
+        Image image = new Image(new File(filepath).toURI().toString());
+
+        // create an image view
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(150);
+        imageView.setFitHeight(150);
+        imageView.setPreserveRatio(true);
+
+        // add the image view to the gallery image view
+        imageView.setOnMouseClicked(e -> {
+
+            // set the selected photo
+            selectedPhoto = photo;
+            // ! print the photo filepath to the console
+            System.out.println(photo.getFilePath());
+        });
+
+        galleryImageView.getChildren().add(imageView);
+        
+
+    }
+
     public void start(Stage stage, Album album) {
         // set the album
         this.album = album;
@@ -47,39 +72,10 @@ public class GalleryImageViewController  {
 
             // get the photo
             Photo photo = photos.get(i);
-            String filepath = photo.getFilePath();
-            Image image = new Image(new File(filepath).toURI().toString());
 
-            // create an image view
-            ImageView imageView = new ImageView(image);
-            imageView.setFitWidth(100);
-            imageView.setFitHeight(100);
-            imageView.setPreserveRatio(true);
-
-            // add the image view to the gallery image view
-            galleryImageView.getChildren().add(imageView);
+            // add the photo to the gallery
+            addToGallery(photo);
         }
-
-        // add event handlers for selection to each image view
-        for (int i = 0; i < galleryImageView.getChildren().size(); i++) {
-            ImageView imageView = (ImageView) galleryImageView.getChildren().get(i);
-            int index = i;
-
-            // add event handler for selection
-            imageView.setOnMouseClicked(e -> {
-
-                // set the selected photo
-                selectedPhoto = photos.get(index);
-
-                // get the photo
-                Photo photo = photos.get(index);
-
-                // ! print the photo filepath to the console
-                System.out.println(photo.getFilePath());
-            });
-
-        }
-
     }
 
     public TilePane getGalleryImageView() {

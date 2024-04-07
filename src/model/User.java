@@ -35,12 +35,25 @@ public class User implements Serializable {
         return albums;
     }
 
+    public List<Photo> searchAlbums(String query) throws IllegalArgumentException {
+        try {
+            List<Photo> photos = new ArrayList<>();
+            for (Album album : albums) {
+                List<Photo> queryPhotos = album.search(query);
+                photos.addAll(queryPhotos);
+            }
+            return photos;
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+
+    }
     public void createAlbum(String albumName) {
         Album album = new Album(albumName);
 
         for (Album a : albums) {
             if (a.getAlbumName().equals(albumName)) {
-                return; // Do not add the album if it already exists
+                PhotoApp.errorAlert("An album with this name already exists", "", "Please choose a different name and try again.");;
             }
         }
 

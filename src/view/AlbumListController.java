@@ -112,7 +112,7 @@ public class AlbumListController {
         // rename the album if the new album name is not null and doesn't already exist
         if (newAlbumName != null && !obsList.contains(newAlbumName)) {
             user.getAlbum(albumName).setAlbumName(newAlbumName);
-            obsList.set(albumListView.getSelectionModel().getSelectedIndex(), newAlbumName);
+            obsList.set(albumListView.getSelectionModel().getSelectedIndex(), obsListString);
         } else {
             errorAlert("Error", "Invalid Album Name", "The album name is invalid.");
         }

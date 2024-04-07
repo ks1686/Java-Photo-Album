@@ -75,25 +75,7 @@ public class GalleryController {
             Photo photo = new Photo(filepath);
             album.addPhoto(photo);
             
-            // Image image = new Image(new File(filepath).toURI().toString());
-            InputStream stream = new FileInputStream(filepath);
-            Image image = new Image(stream);
-            ImageView imageView = new ImageView();
-            imageView.setImage(image);
-            imageView.setFitWidth(100);
-            imageView.setPreserveRatio(true);
-            imageView.setFitHeight(100);
-
-    
-            // add the image view to the gallery image view
-            // first get the galleryImageView
-            TilePane galleryImageView = galleryViewController.getGalleryImageView();
-            imageView.setOnMouseClicked(e -> {
-
-                // set the selected photo
-                galleryViewController.setSelectedPhoto(photo);
-            });
-            galleryImageView.getChildren().add(imageView);
+            galleryViewController.addToGallery(photo);
             
         } else {
             errorAlert("Invalid image", null, null);
@@ -124,7 +106,7 @@ public class GalleryController {
         Photo selectedPhoto = galleryViewController.getSelectedPhoto();
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Set caption");
-        dialog.setHeaderText("Enter new caption (leave empty to delete caption):");
+        dialog.setHeaderText("Enter new caption for the selected photo (leave empty to delete caption):");
         dialog.setContentText("Enter caption:");
 
         // get the new album name
