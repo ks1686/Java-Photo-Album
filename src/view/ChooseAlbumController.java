@@ -93,6 +93,14 @@ public class ChooseAlbumController {
             return;
         }
 
+        if (selectedAlbum.getPhotos().contains(selectedPhoto)) {
+            errorAlert("Error", "Photo already in album", "Photo already in album");
+            return;
+        } else if (selectedAlbum.equals(currentAlbum)) {
+            errorAlert("Error", "Cannot copy to same album", "Cannot copy to same album");
+            return;
+        }
+
         if (buttonText.equals("Copy to Album")) {
             copyToAlbum(selectedPhoto, selectedAlbum);
             PhotoApp.infoAlert("Photo Copied", "", "Photo copied to album " + selectedAlbum.getAlbumName());
