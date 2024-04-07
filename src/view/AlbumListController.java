@@ -109,10 +109,32 @@ public class AlbumListController {
 
     // method to rename an existing album
     public void renameAlbum(String albumName, String newAlbumName) {
-        // rename the album if the new album name is not null and doesn't already exist
-        if (newAlbumName != null && !obsList.contains(newAlbumName)) {
+        // fix the album name
+        albumName = fixAlbumName(albumName);
+
+        // rename if new name isn't null, doesn't match the albumName, and doesn't already exist
+        if (newAlbumName != null && !newAlbumName.equals(albumName) && !obsList.contains(newAlbumName)){
             user.getAlbum(albumName).setAlbumName(newAlbumName);
+            System.out.println("Status 3");
             obsList.set(albumListView.getSelectionModel().getSelectedIndex(), newAlbumName);
+
+            // load the homepage controller
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/homepage.fxml"));
+
+            Pane root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            HomepageController homepageController = loader.getController();
+            Stage stage = (Stage) albumListView.getScene().getWindow();
+            homepageController.start(stage, user, app);
+            Scene scene = new Scene(root, 800, 600);
+            stage.setScene(scene);
+            stage.show();
         } else {
             errorAlert("Error", "Invalid Album Name", "The album name is invalid.");
         }
