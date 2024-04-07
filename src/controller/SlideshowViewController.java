@@ -6,6 +6,7 @@ import model.Photo;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.control.Button;
 
 import java.io.File;
 
@@ -15,6 +16,10 @@ public class SlideshowViewController {
     private Album currentAlbum;
     private Photo currentPhoto;
     private int currentIndex;
+    @FXML
+    private Button previousButton;
+    @FXML
+    private Button nextButton;
 
     // the imageView in the slideshow view
     @FXML
@@ -45,6 +50,13 @@ public class SlideshowViewController {
         }
         currentPhoto = currentAlbum.getPhotos().get(currentIndex);
 
+        // disable the button if there is no next photo
+        if (currentIndex == currentAlbum.getPhotos().size() - 1) {
+            nextButton.setDisable(true);
+        }
+        // enable the previous button
+        previousButton.setDisable(false);
+
         // get the photo
         String filepath = currentPhoto.getFilePath();
         Image image = new Image(new File(filepath).toURI().toString());
@@ -54,7 +66,7 @@ public class SlideshowViewController {
 
     }
 
-    // method to go to the previous photo
+    // method to go to the previous photo (disable the button if there is no previous photo)
     @FXML
     public void previousPhoto() {
         // get the previous photo
@@ -64,6 +76,13 @@ public class SlideshowViewController {
         }
         currentPhoto = currentAlbum.getPhotos().get(currentIndex);
 
+        // disable the button if there is no previous photo
+        if (currentIndex == 0) {
+            previousButton.setDisable(true);
+        }
+        // enable the next button
+        nextButton.setDisable(false);
+
         // get the photo
         String filepath = currentPhoto.getFilePath();
         Image image = new Image(new File(filepath).toURI().toString());
@@ -71,4 +90,5 @@ public class SlideshowViewController {
         // set the image view to the selected photo
         slideshowImageView.setImage(image);
     }
+
 }

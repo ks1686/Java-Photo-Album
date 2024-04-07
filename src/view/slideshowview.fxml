@@ -9,10 +9,10 @@
 
     <HBox alignment="CENTER">
         <!-- Previous Button -->
-        <Button onAction="#previousPhoto" text="Previous" />
+        <Button fx:id="previousButton" onAction="#previousPhoto" text="Previous" />
       <ImageView fx:id="slideshowImageView" fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
 
         <!-- Next Button -->
-        <Button onAction="#nextPhoto" text="Next" />
+        <Button fx:id="nextButton" onAction="#nextPhoto" text="Next" />
     </HBox>
 </VBox>
