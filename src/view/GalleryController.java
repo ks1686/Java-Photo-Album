@@ -164,6 +164,9 @@ public class GalleryController {
             Stage stage = (Stage) copyToAlbumButton.getScene().getWindow();
             // start the choose album controller
             chooseAlbumController.start(stage, this.app, this.album, selectedPhoto, this.user);
+
+            //set text of selectAlbumButton to "Copy to Album"
+            chooseAlbumController.getSelectAlbumButton().setText("Copy to Album");
             // set the scene
             Scene scene = new Scene(root, 800, 600);
             stage.setScene(scene);
@@ -177,7 +180,24 @@ public class GalleryController {
 
     @FXML
     public void moveToAlbum() {
-        // TODO: Implement moveToAlbum functionality
+        Photo selectedPhoto = galleryViewController.getSelectedPhoto();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/choosealbum.fxml"));
+        try {
+            Pane root = loader.load();
+            ChooseAlbumController chooseAlbumController = loader.getController();
+            Stage stage = (Stage) moveToAlbumButton.getScene().getWindow();
+            chooseAlbumController.start(stage, this.app, this.album, selectedPhoto, this.user);
+            // get the selectAlbumButton and set the text to "Move to Album"
+            chooseAlbumController.getSelectAlbumButton().setText("Move to Album");
+            Scene scene = new Scene(root, 800, 600);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            errorAlert("Move to Album", "Failed to load choose album screen", "Failed to load choose album screen");
+        }
+
     }
 
     // method to move back to the homepage controller

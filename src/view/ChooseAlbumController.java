@@ -2,13 +2,10 @@ package view;
 
 import java.util.List;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -43,7 +40,7 @@ public class ChooseAlbumController {
         this.currentAlbum = currentAlbum;
         this.selectedPhoto = selectedPhoto;
         this.user = user;
-        titleText.setText("Choose an album to copy the photo to");
+        titleText.setText("Choose an album");
         albumListController.start(stage, user, app);
 
 
@@ -84,17 +81,40 @@ public class ChooseAlbumController {
 
     // method to copy the previously selected photo to the selected album
     @FXML
-    public void copyPhotoToAlbum() {
+    public void moveOrCopyToAlbum() {
         // if the selected album is not null, copy the photo to the album
-        if (selectedAlbum != null) {
-            selectedAlbum.addPhoto(selectedPhoto);
-            // show an info alert from the PhotoApp class
-            app.infoAlert("Photo Copied", "", "Photo copied to album " + selectedAlbum.getAlbumName());
-            // go back to the gallery view
-            backToGallery();
-        } else {
-            // show an error alert if the selected album is null
+        // check the text of the button. if it is "Copy to Album", copy the photo to the album
+        String buttonText = selectAlbumButton.getText();
+        Photo selectedPhoto = this.selectedPhoto;
+        Album selectedAlbum = this.selectedAlbum;
+        Album currentAlbum = this.currentAlbum;
+        if (selectedAlbum == null) {
             errorAlert("Error", "No album selected", "No album selected");
+            return;
         }
+
+        if (buttonText.equals("Copy to Album")) {
+            copyToAlbum(selectedPhoto, selectedAlbum);
+            PhotoApp.infoAlert("Photo Copied", "", "Photo copied to album " + selectedAlbum.getAlbumName());
+        } else if (buttonText.equals("Move to Album")) {
+            moveToAlbum(selectedPhoto, currentAlbum, selectedAlbum);
+            PhotoApp.infoAlert("Photo moved", "", "Photo moved to album " + selectedAlbum.getAlbumName());
+        }
+        backToGallery();
+
+    }
+
+    public void copyToAlbum(Photo photo, Album album) {
+        album.addPhoto(photo);
+    }
+
+    public void moveToAlbum(Photo photo, Album oldAlbum, Album album) {
+        album.addPhoto(photo);
+        oldAlbum.removePhoto(photo);
+
+    }
+
+    public Button getSelectAlbumButton() {
+        return selectAlbumButton;
     }
 }

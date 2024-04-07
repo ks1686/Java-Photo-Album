@@ -119,7 +119,6 @@ public class AlbumListController {
     }
 
     public void createAlbum(String albumName) {
-        Album album = new Album(albumName);
         // if the album name is not null and doesn't already exist, create the album
         if (albumName != null && !obsList.contains(albumName)) {
             user.createAlbum(albumName);
