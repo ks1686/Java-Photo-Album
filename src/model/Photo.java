@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.io.File;
 
 
+
 public class Photo implements Serializable {
 
     private String filepath;

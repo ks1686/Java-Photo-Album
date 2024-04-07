@@ -9,6 +9,8 @@ import model.User;
 import model.Album;
 import model.Photo;
 import javafx.scene.layout.TilePane;
+import javafx.scene.text.Text;
+import javafx.scene.layout.VBox;
 
 import java.io.File;
 import java.util.List;
@@ -46,8 +48,20 @@ public class GalleryImageViewController  {
         imageView.setFitHeight(150);
         imageView.setPreserveRatio(true);
 
-        // add the image view to the gallery image view
-        imageView.setOnMouseClicked(e -> {
+        // create a text view for the caption of the photo
+        Text caption = new Text(photo.getCaption());
+        caption.setWrappingWidth(150);
+        caption.setStyle("-fx-font-size: 10px;");
+        caption.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+
+        // create a vbox to hold the image view and the caption
+        VBox container = new VBox(imageView, caption);
+        container.setAlignment(javafx.geometry.Pos.CENTER);
+        container.setSpacing(5);
+
+
+        // add the container to the gallery image view
+        container.setOnMouseClicked(e -> {
 
             // set the selected photo
             selectedPhoto = photo;
@@ -55,7 +69,7 @@ public class GalleryImageViewController  {
             System.out.println(photo.getFilePath());
         });
 
-        galleryImageView.getChildren().add(imageView);
+        galleryImageView.getChildren().add(container);
         
 
     }

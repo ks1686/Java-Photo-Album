@@ -112,7 +112,21 @@ public class GalleryController {
             return;
         }
 
-        selectedPhoto.setCaption(caption);
+        // if caption is different from the current caption, set the new caption
+        if (caption != null && !caption.equals(selectedPhoto.getCaption())) {
+            selectedPhoto.setCaption(caption);
+        } else if (caption.equals("")) {
+            selectedPhoto.setCaption(null);
+        } else {
+            errorAlert("Set Caption", "Invalid Caption", "This is the existing caption.");
+        }
+
+        // get the current stage
+        Stage stage = (Stage) setCaptionButton.getScene().getWindow();
+        // clear the gallery image view
+        galleryViewController.getGalleryImageView().getChildren().clear();
+        galleryViewController.start(stage, album);
+
     }
 
     @FXML
