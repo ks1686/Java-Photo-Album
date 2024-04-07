@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Album;
@@ -17,13 +18,12 @@ import model.Photos;
 import model.User;
 public class SearchResultsController {
 
+    public AnchorPane galleryView;
+  public Button backToHomepageButton;
     @FXML
     private Button createAlbumButton;
 
-    @FXML
-    private Button backToHomepageButton;
-
-    @FXML private GalleryImageViewController galleryViewController;
+  @FXML private GalleryImageViewController galleryViewController;
 
     private Photos app;
     private User user;
@@ -31,13 +31,12 @@ public class SearchResultsController {
 
 
     @FXML
-    public void start(Scene scene, Photos app, User currentUser, Album searchResultsAlbum) {
-        Stage stage = (Stage) createAlbumButton.getScene().getWindow();
+    public void start(Photos app, User currentUser, Album searchResultsAlbum) {
         this.app = app;
         this.user = currentUser;
         this.searchResultsAlbum = searchResultsAlbum;
 
-        galleryViewController.start(stage, searchResultsAlbum);
+        galleryViewController.start(searchResultsAlbum);
     }
 
     @FXML
@@ -64,7 +63,7 @@ public class SearchResultsController {
             try {
                 Pane root = loader.load();
                 HomepageController controller = loader.getController();
-                controller.start(stage, user, app);
+                controller.start(user, app);
                 stage.setScene(new Scene(root, 800, 600));
                 stage.show();
             } catch (IOException e) {
@@ -84,7 +83,7 @@ public class SearchResultsController {
         try {
             Pane root = loader.load();
             HomepageController controller = loader.getController();
-            controller.start(stage, this.user, this.app);
+            controller.start(this.user, this.app);
             stage.setScene(new Scene(root, 800, 600));
             stage.show();
         } catch (IOException e) {

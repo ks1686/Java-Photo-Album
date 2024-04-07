@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -22,6 +23,12 @@ import java.util.NoSuchElementException;
 
 
 public class GalleryController {
+    public AnchorPane galleryView;
+  public Button removePhotoButton;
+    public Button setCaptionButton;
+  public Button displaySeparatelyButton;
+  public Button editTagsButton;
+  public Button backToAlbums;
     @FXML protected GalleryImageViewController galleryViewController;
 
     private Photos app;
@@ -34,8 +41,8 @@ public class GalleryController {
     }
 
     // method to start the gallery controller
-    public void start(Stage stage, Photos app, Album album, User user) {
-        galleryViewController.start(stage, album);
+    public void start(Photos app, Album album, User user) {
+        galleryViewController.start(album);
         this.app = app;
         this.album = album;
         this.user=user;
@@ -45,23 +52,11 @@ public class GalleryController {
     private Button addPhotoButton;
 
     @FXML
-    private Button removePhotoButton;
-
-    @FXML
-    private Button setCaptionButton;
-
-    @FXML
-    private Button displaySeparatelyButton;
-
-    @FXML
-    private Button editTagsButton;
-
-    @FXML
     private Button copyToAlbumButton;
 
     @FXML
     private Button moveToAlbumButton;
-    public void addPhoto() throws IOException {
+    public void addPhoto() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         File file = fileChooser.showOpenDialog(null);
@@ -86,13 +81,10 @@ public class GalleryController {
         // remove the photo from the album
         album.removePhoto(selectedPhoto);
 
-
-        Stage stage = (Stage) removePhotoButton.getScene().getWindow();
-
         // clear the gallery image view
         galleryViewController.getGalleryImageView().getChildren().clear();
-        galleryViewController.start(stage, album);
-        // messy but works. could also do this for addphoto but it's not necessary
+        galleryViewController.start(album);
+        // messy but works. could also do this for addphoto, but it's not necessary
     }
 
     @FXML
@@ -105,7 +97,7 @@ public class GalleryController {
         dialog.setContentText("Enter caption:");
 
         // get the new album name
-        String caption = null;
+        String caption;
         try {
             caption = dialog.showAndWait().get();
         } catch (NoSuchElementException e) {
@@ -113,19 +105,17 @@ public class GalleryController {
         }
 
         // if caption is different from the current caption, set the new caption
-        if (caption != null && !caption.equals(selectedPhoto.getCaption())) {
+        if (!caption.equals(selectedPhoto.getCaption())) {
             selectedPhoto.setCaption(caption);
-        } else if (caption.equals("")) {
+        } else if (caption.isEmpty()) {
             selectedPhoto.setCaption(null);
         } else {
             errorAlert("Set Caption", "Invalid Caption", "This is the existing caption.");
         }
 
-        // get the current stage
-        Stage stage = (Stage) setCaptionButton.getScene().getWindow();
         // clear the gallery image view
         galleryViewController.getGalleryImageView().getChildren().clear();
-        galleryViewController.start(stage, album);
+        galleryViewController.start(album);
 
     }
 
@@ -142,7 +132,7 @@ public class GalleryController {
             Pane root = loader.load();
             SeparatePhotoDisplayController separatePhotoDisplayController = loader.getController();
             Stage stage = new Stage();
-            separatePhotoDisplayController.start(stage, this.app, this.album, selectedPhoto, this.user);
+            separatePhotoDisplayController.start(selectedPhoto);
             Scene scene = new Scene(root, 800, 600);
             stage.setScene(scene);
             stage.show();
@@ -173,7 +163,7 @@ public class GalleryController {
             // get the current stage
             Stage stage = (Stage) copyToAlbumButton.getScene().getWindow();
             // start the choose album controller
-            chooseAlbumController.start(stage, this.app, this.album, selectedPhoto, this.user);
+            chooseAlbumController.start(this.app, this.album, selectedPhoto, this.user);
 
             //set text of selectAlbumButton to "Copy to Album"
             chooseAlbumController.getSelectAlbumButton().setText("Copy to Album");
@@ -197,7 +187,7 @@ public class GalleryController {
             Pane root = loader.load();
             ChooseAlbumController chooseAlbumController = loader.getController();
             Stage stage = (Stage) moveToAlbumButton.getScene().getWindow();
-            chooseAlbumController.start(stage, this.app, this.album, selectedPhoto, this.user);
+            chooseAlbumController.start(this.app, this.album, selectedPhoto, this.user);
             // get the selectAlbumButton and set the text to "Move to Album"
             chooseAlbumController.getSelectAlbumButton().setText("Move to Album");
             Scene scene = new Scene(root, 800, 600);
@@ -220,7 +210,7 @@ public class GalleryController {
         try {
             Pane root = loader.load();
             HomepageController controller = loader.getController();
-            controller.start(stage, this.user, this.app);
+            controller.start(this.user, this.app);
             stage.setScene(new Scene(root, 800, 600));
             stage.show();
         } catch (IOException e) {

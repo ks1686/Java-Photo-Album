@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -18,6 +19,8 @@ import static model.Photos.errorAlert;
 
 public class ChooseAlbumController {
 
+  public AnchorPane albumList;
+  public Button backToPhotos;
     @FXML
     private Text titleText;
 
@@ -35,13 +38,13 @@ public class ChooseAlbumController {
     private Photo selectedPhoto;
 
     // method to start the controller
-    public void start(Stage stage, Photos app, Album currentAlbum, Photo selectedPhoto, User user) {
+    public void start(Photos app, Album currentAlbum, Photo selectedPhoto, User user) {
         this.app = app;
         this.currentAlbum = currentAlbum;
         this.selectedPhoto = selectedPhoto;
         this.user = user;
         titleText.setText("Choose an album");
-        albumListController.start(stage, user, app);
+        albumListController.start(user, app);
 
 
         // set the selected album to the album selected in the album list controller
@@ -67,7 +70,7 @@ public class ChooseAlbumController {
         try {
             Pane root = loader.load();
             GalleryController galleryController = loader.getController();
-            galleryController.start(stage, this.app, this.currentAlbum, this.user);
+            galleryController.start(this.app, this.currentAlbum, this.user);
             Scene scene = new Scene(root, 800, 600);
             stage.setScene(scene);
             stage.show();

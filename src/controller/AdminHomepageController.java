@@ -7,6 +7,7 @@ import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import model.Photos;
@@ -15,8 +16,8 @@ import model.User;
 import static model.Photos.infoAlert;
 
 public class AdminHomepageController {
-    @FXML
-    protected AdminUserListController adminUserListController;
+    public AnchorPane adminUserList;
+  @FXML protected AdminUserListController adminUserListController;
 
     @FXML Button createUserButton;
     @FXML Button deleteUserButton;
@@ -109,8 +110,7 @@ public class AdminHomepageController {
         dialog.initOwner(mainStage); dialog.setTitle("Create New User");
         dialog.setHeaderText("Enter Username of New User");
         dialog.setContentText("Username: ");
-        Optional<String> result = dialog.showAndWait();
-        return result;
+        return dialog.showAndWait();
     }
 
     // method to logout

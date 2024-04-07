@@ -28,37 +28,17 @@ public class AlbumListController {
     private Photos app;
 
     // method to start the album list controller
-    public void start(Stage stage, User user, Photos app) {
+    public void start(User user, Photos app) {
 
         List<Album> albums = user.getAlbums();
         List<String> albumNames = new ArrayList<>();
         this.user = user;
         this.app = app;
 
-        // add the number of photos in each album to the list and the range of dates
-        for (int i = 0; i < albums.size(); i++) {
-            
-            Album album = albums.get(i);
-            String albumName = album.getAlbumName();
-            int numPhotos = album.getPhotos().size();
-            Calendar startDate = album.getStartDate();
-            Calendar endDate = album.getEndDate();
+        // add the number of photos on each album to the list and the range of dates
+        for (Album album : albums) {
 
-            // add the number of photos and the range of dates to the album name
-            // format Calendar to a String
-
-            String startDateString = "N/A";
-            String endDateString = "N/A";
-            if (startDate != null) {
-                startDateString = startDate.get(Calendar.MONTH) + "/" + startDate.get(Calendar.DAY_OF_MONTH) + "/" + startDate.get(Calendar.YEAR);
-            }
-
-            if (endDate != null) {
-                endDateString = endDate.get(Calendar.MONTH) + "/" + endDate.get(Calendar.DAY_OF_MONTH) + "/" + endDate.get(Calendar.YEAR);
-            }
-            
-            
-            albumName += " (" + numPhotos + " photos, " + startDateString + " - " + endDateString + ")";
+            String albumName = getAlbumName(album);
             albumNames.add(albumName);
         }
         obsList = FXCollections.observableArrayList(albumNames); // create an observable list from the list of albums
@@ -66,6 +46,30 @@ public class AlbumListController {
 
         albumListView.getSelectionModel().select(0); // select the first item in the list
 
+    }
+
+    private static String getAlbumName(Album album) {
+        String albumName = album.getAlbumName();
+        int numPhotos = album.getPhotos().size();
+        Calendar startDate = album.getStartDate();
+        Calendar endDate = album.getEndDate();
+
+        // add the number of photos and the range of dates to the album name
+        // format Calendar to a String
+
+        String startDateString = "N/A";
+        String endDateString = "N/A";
+        if (startDate != null) {
+            startDateString = startDate.get(Calendar.MONTH) + "/" + startDate.get(Calendar.DAY_OF_MONTH) + "/" + startDate.get(Calendar.YEAR);
+        }
+
+        if (endDate != null) {
+            endDateString = endDate.get(Calendar.MONTH) + "/" + endDate.get(Calendar.DAY_OF_MONTH) + "/" + endDate.get(Calendar.YEAR);
+        }
+
+
+        albumName += " (" + numPhotos + " photos, " + startDateString + " - " + endDateString + ")";
+        return albumName;
     }
 
     // method to return the selected album
@@ -85,7 +89,7 @@ public class AlbumListController {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/view/homepage.fxml"));
 
-        Pane root = null;
+        Pane root;
         try {
             root = loader.load();
         } catch (IOException e) {
@@ -94,7 +98,7 @@ public class AlbumListController {
 
         HomepageController homepageController = loader.getController();
         Stage stage = (Stage) albumListView.getScene().getWindow();
-        homepageController.start(stage, user, app);
+        homepageController.start(user, app);
         Scene scene = new Scene(root, 800, 600);
         stage.setScene(scene);
         stage.show();
@@ -115,7 +119,7 @@ public class AlbumListController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/homepage.fxml"));
 
-            Pane root = null;
+            Pane root;
             try {
                 root = loader.load();
             } catch (IOException e) {
@@ -124,7 +128,7 @@ public class AlbumListController {
 
             HomepageController homepageController = loader.getController();
             Stage stage = (Stage) albumListView.getScene().getWindow();
-            homepageController.start(stage, user, app);
+            homepageController.start(user, app);
             Scene scene = new Scene(root, 800, 600);
             stage.setScene(scene);
             stage.show();
@@ -135,7 +139,7 @@ public class AlbumListController {
 
     public void createAlbum(String albumName) {
         // if the album name is not null and doesn't already exist, create the album
-        if (albumName == null || albumName.strip().equals("")) {
+        if (albumName == null || albumName.isBlank()) {
             errorAlert("Error", "Invalid Album Name", "The album name is invalid. Make sure the name has non-whitespace characters.");
             return;
         }
@@ -149,7 +153,7 @@ public class AlbumListController {
 
 
 
-        if (albumName != null && !obsList.contains(albumName)) {
+        if (!obsList.contains(albumName)) {
             user.createAlbum(albumName);
             obsList.add(albumName);
 
@@ -157,7 +161,7 @@ public class AlbumListController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/homepage.fxml"));
 
-            Pane root = null;
+            Pane root;
             try {
                 root = loader.load();
             } catch (IOException e) {
@@ -166,7 +170,7 @@ public class AlbumListController {
 
             HomepageController homepageController = loader.getController();
             Stage stage = (Stage) albumListView.getScene().getWindow();
-            homepageController.start(stage, user, app);
+            homepageController.start(user, app);
             Scene scene = new Scene(root, 800, 600);
             stage.setScene(scene);
             stage.show();

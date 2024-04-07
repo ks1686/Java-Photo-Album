@@ -4,8 +4,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane layoutX="87.0" layoutY="141.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="256.0" prefWidth="626.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminUserListController">
-   <children>
-      <ListView fx:id="adminUserListView" prefHeight="256.0" prefWidth="626.0" />
-   </children>
+<AnchorPane layoutX="87.0" layoutY="141.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="256.0" prefWidth="626.0" xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminUserListController">
+   <ListView fx:id="adminUserListView" prefHeight="256.0" prefWidth="626.0"/>
 </AnchorPane>

@@ -1,36 +1,22 @@
 package controller;
 
-import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
-import model.Photos;
-import model.User;
-import model.Album;
-import model.Photo;
-import javafx.scene.layout.TilePane;
-import javafx.scene.text.Text;
-import javafx.scene.layout.VBox;
-
 import java.io.File;
 import java.util.List;
-
-
+import javafx.fxml.FXML;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import model.Album;
+import model.Photo;
 
 public class GalleryImageViewController  {
 
     @FXML private TilePane galleryImageView;
 
-    private Photos app;
-    private User user;
-    private Album album;
-
     // local variable to store the selected photo
     private Photo selectedPhoto;
-
-    public void setSelectedPhoto(Photo photo) {
-        this.selectedPhoto = photo;
-    }
 
     public Photo getSelectedPhoto() {
         return this.selectedPhoto;
@@ -73,19 +59,16 @@ public class GalleryImageViewController  {
 
     }
 
-    public void start(Stage stage, Album album) {
+    public void start(Album album) {
         // set the album
-        this.album = album;
 
         // get the photos from the album
         List<Photo> photos = album.getPhotos();
 
         // add the photos to the gallery image view
-        for (int i = 0; i < photos.size(); i++) {
+        for (Photo photo : photos) {
 
             // get the photo
-            Photo photo = photos.get(i);
-
             // add the photo to the gallery
             addToGallery(photo);
         }

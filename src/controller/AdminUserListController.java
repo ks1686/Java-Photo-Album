@@ -32,10 +32,6 @@ public class AdminUserListController {
     private void showItem(Stage mainstage) {
         String selectedUser = adminUserListView.getSelectionModel().getSelectedItem();
         Button deleteUserButton = (Button) mainstage.getScene().lookup("#deleteUserButton");
-        if (selectedUser != null) {
-            deleteUserButton.setDisable(false);
-        } else {
-            deleteUserButton.setDisable(true);
-        }
+        deleteUserButton.setDisable(selectedUser == null);
     }
 }
