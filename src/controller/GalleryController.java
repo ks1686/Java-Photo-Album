@@ -219,4 +219,28 @@ public class GalleryController {
             errorAlert("Back to Homepage", "Failed to return to homepage screen", "Failed to return to homepage screen");
         }
     }
+
+    // method to open the slideshow view
+    @FXML public void openSlideshow() {
+        // get the selected photo
+        Photo selectedPhoto = galleryViewController.getSelectedPhoto();
+        // get the current album
+        Album currentAlbum = this.album;
+        // load the slideshow view controller without closing the current window
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/slideshowview.fxml"));
+        try {
+            Pane root = loader.load();
+            SlideshowViewController slideshowViewController = loader.getController();
+            Stage stage = new Stage();
+            slideshowViewController.start(selectedPhoto, currentAlbum);
+            Scene scene = new Scene(root, 800, 600);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // show an error alert that the slideshow screen could not be loaded
+            errorAlert("Open Slideshow", "Failed to load slideshow screen", "Failed to load slideshow screen");
+        }
+    }
 }

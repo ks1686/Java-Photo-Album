@@ -69,7 +69,6 @@ public class HomepageController {
     }
 
     // method to rename an album
-    // button press opens a dialog box to enter the new album name
     @FXML
     private void renameAlbum() {
         // open a text input dialog box
@@ -97,6 +96,7 @@ public class HomepageController {
         }
     }
 
+    // method to create an album
     @FXML public void createAlbum() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Create Album");
@@ -113,6 +113,7 @@ public class HomepageController {
 
     }
 
+    // method to search for photos
     private boolean isValidSearchQuery(String query) {
         if (query == null || query.isEmpty()) {
             return false;
@@ -122,6 +123,7 @@ public class HomepageController {
         return query.matches("\\d{2}/\\d{2}/\\d{4}-\\d{2}/\\d{2}/\\d{4}") || query.matches("\\w+=\\w+") || query.matches("\\w+=\\w+ (AND|OR) \\w+=\\w+");
     }
 
+    // method to search for photos
     @FXML public void searchPhotos() throws IOException {
         // string in the text bar
         String query = searchBarTextField.getText();
@@ -169,11 +171,13 @@ public class HomepageController {
 
     }
 
+    // method to quit the application
     @FXML public void quit() {
         // quit application, but save it also
         app.quit();
     }
 
+    // method to open an album
     @FXML public void openAlbum() throws IOException {
         // open the selected album
         String albumName = albumListController.getSelectedAlbum();
@@ -205,5 +209,6 @@ public class HomepageController {
         }
 
     }
+
 
 }
