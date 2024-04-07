@@ -65,8 +65,7 @@ public class GalleryImageViewController  {
 
             // set the selected photo
             selectedPhoto = photo;
-            // ! print the photo filepath to the console
-            System.out.println(photo.getFilePath());
+
         });
 
         galleryImageView.getChildren().add(container);

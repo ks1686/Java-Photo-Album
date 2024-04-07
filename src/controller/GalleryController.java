@@ -136,10 +136,12 @@ public class GalleryController {
         // load the separate photo display controller without closing the current window
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/view/separatephotodisplay.fxml"));
+
+        // change below so that it doesn't close the current window
         try {
             Pane root = loader.load();
             SeparatePhotoDisplayController separatePhotoDisplayController = loader.getController();
-            Stage stage = (Stage) displaySeparatelyButton.getScene().getWindow();
+            Stage stage = new Stage();
             separatePhotoDisplayController.start(stage, this.app, this.album, selectedPhoto, this.user);
             Scene scene = new Scene(root, 800, 600);
             stage.setScene(scene);

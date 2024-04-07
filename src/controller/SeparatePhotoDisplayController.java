@@ -25,7 +25,7 @@ public class SeparatePhotoDisplayController {
 
     @FXML private ImageView imageView;
     @FXML private Label captionLabel;
-    @FXML private Label dateLabel;
+    @FXML private Label dateTimeLabel;
     @FXML private Label tagsLabel;
     public void start(Stage stage, Photos app, Album album, Photo selectedPhoto, User user) {
         // get the selected photo file path
@@ -34,15 +34,16 @@ public class SeparatePhotoDisplayController {
 
         // set the image view
         imageView.setImage(image);
-
         // set the caption label
         captionLabel.setText(selectedPhoto.getCaption());
 
+
         // set the date label
-        dateLabel.setText(selectedPhoto.getDate().getTime().toString());
+        dateTimeLabel.setText(selectedPhoto.getDate().getTime().toString());
 
         // set the tags label
         tagsLabel.setText(selectedPhoto.getTags().toString());
+
     }
 }
 
