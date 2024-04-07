@@ -147,4 +147,16 @@ public class PhotoApp extends Application implements Serializable {
             errorAlert("Logout", "Failed to return to login screen", "Failed to return to login screen");
         }
     }
+
+    public void quit(){ 
+        // save the app 
+        // TODO: test and make sure this actually saves the data
+        try {
+            PhotoApp.writeApp(this);
+        } catch (Exception e) {
+            // show an alert that there was an error writing to the file
+            errorAlert("Error writing to file", "", "Error writing to file /data/data.dat");
+        }
+        System.exit(0);
+    }
 }

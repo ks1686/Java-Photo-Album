@@ -75,25 +75,7 @@ public class GalleryController {
             Photo photo = new Photo(filepath);
             album.addPhoto(photo);
             
-            // Image image = new Image(new File(filepath).toURI().toString());
-            InputStream stream = new FileInputStream(filepath);
-            Image image = new Image(stream);
-            ImageView imageView = new ImageView();
-            imageView.setImage(image);
-            imageView.setFitWidth(100);
-            imageView.setPreserveRatio(true);
-            imageView.setFitHeight(100);
-
-    
-            // add the image view to the gallery image view
-            // first get the galleryImageView
-            TilePane galleryImageView = galleryViewController.getGalleryImageView();
-            imageView.setOnMouseClicked(e -> {
-
-                // set the selected photo
-                galleryViewController.setSelectedPhoto(photo);
-            });
-            galleryImageView.getChildren().add(imageView);
+            galleryViewController.addToGallery(photo);
             
         } else {
             errorAlert("Invalid image", null, null);
@@ -124,7 +106,7 @@ public class GalleryController {
         Photo selectedPhoto = galleryViewController.getSelectedPhoto();
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Set caption");
-        dialog.setHeaderText("Enter new caption (leave empty to delete caption):");
+        dialog.setHeaderText("Enter new caption for the selected photo (leave empty to delete caption):");
         dialog.setContentText("Enter caption:");
 
         // get the new album name
@@ -164,6 +146,9 @@ public class GalleryController {
             Stage stage = (Stage) copyToAlbumButton.getScene().getWindow();
             // start the choose album controller
             chooseAlbumController.start(stage, this.app, this.album, selectedPhoto, this.user);
+
+            //set text of selectAlbumButton to "Copy to Album"
+            chooseAlbumController.getSelectAlbumButton().setText("Copy to Album");
             // set the scene
             Scene scene = new Scene(root, 800, 600);
             stage.setScene(scene);
@@ -177,7 +162,24 @@ public class GalleryController {
 
     @FXML
     public void moveToAlbum() {
-        // TODO: Implement moveToAlbum functionality
+        Photo selectedPhoto = galleryViewController.getSelectedPhoto();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/choosealbum.fxml"));
+        try {
+            Pane root = loader.load();
+            ChooseAlbumController chooseAlbumController = loader.getController();
+            Stage stage = (Stage) moveToAlbumButton.getScene().getWindow();
+            chooseAlbumController.start(stage, this.app, this.album, selectedPhoto, this.user);
+            // get the selectAlbumButton and set the text to "Move to Album"
+            chooseAlbumController.getSelectAlbumButton().setText("Move to Album");
+            Scene scene = new Scene(root, 800, 600);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            errorAlert("Move to Album", "Failed to load choose album screen", "Failed to load choose album screen");
+        }
+
     }
 
     // method to move back to the homepage controller

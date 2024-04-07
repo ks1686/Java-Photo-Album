@@ -141,8 +141,21 @@ public class AlbumListController {
     }
 
     public void createAlbum(String albumName) {
-        Album album = new Album(albumName);
         // if the album name is not null and doesn't already exist, create the album
+        if (albumName == null || albumName.strip().equals("")) {
+            errorAlert("Error", "Invalid Album Name", "The album name is invalid. Make sure the name has non-whitespace characters.");
+            return;
+        }
+
+        for (String name : obsList) {
+            if (fixAlbumName(name).equals(albumName)) {
+                errorAlert("Error", "Invalid Album Name", "The album name is invalid. The album already exists.");
+                return;
+            }
+        }
+
+
+
         if (albumName != null && !obsList.contains(albumName)) {
             user.createAlbum(albumName);
             obsList.add(albumName);

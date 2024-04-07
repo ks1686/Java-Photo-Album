@@ -1,15 +1,18 @@
 package view;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Album;
+import model.Photo;
 import model.User;
 
 import model.PhotoApp;
@@ -19,6 +22,7 @@ public class HomepageController {
     @FXML
     protected AlbumListController albumListController;
 
+    @FXML protected TextField searchBarTextField;
     private PhotoApp app;
 
     // private user object
@@ -74,11 +78,13 @@ public class HomepageController {
         }
 
         // get the selected album
-        String albumName = albumListController.getSelectedAlbum();
+        String albumName = albumListController.fixAlbumName(albumListController.getSelectedAlbum());
 
         // if the album name is not null, rename the album
-        if (albumName != null) {
+        if (albumName != null && newAlbumName != null) {
             albumListController.renameAlbum(albumName, newAlbumName);
+        } else {
+            PhotoApp.errorAlert("Error", "Invalid Album Name", "The album name is invalid.");
         }
     }
 
@@ -100,8 +106,69 @@ public class HomepageController {
         
     }
 
-    @FXML public void searchPhotos() {
-        // open a new window to search for photos
+    private boolean isValidSearchQuery(String query) {
+        if (query == null || query.isEmpty()) {
+            return false;
+        }
+
+        // query must be of the form MM/DD/YYYY-MM/DD/YYYY OR a tag in the form "key=value" OR a conjunction/disjunction of tags like "key=value AND key=value"m "key=value OR key=value"
+        if (!query.matches("\\d{2}/\\d{2}/\\d{4}-\\d{2}/\\d{2}/\\d{4}") && !query.matches("\\w+=\\w+") && !query.matches("\\w+=\\w+ (AND|OR) \\w+=\\w+")) {
+            return false;
+        }
+        return true;
+    }
+
+    @FXML public void searchPhotos() throws IOException {
+        // string in the text bar
+        String query = searchBarTextField.getText();
+        if (!(isValidSearchQuery(query))){
+            PhotoApp.errorAlert("Invalid Search Query", "Invalid Search Query", "Invalid Search Query");
+            return;
+        }
+        List<Photo> photos = user.searchAlbums(query);
+
+        if (photos == null) {
+            PhotoApp.errorAlert("Search Error", "Search query is invalid. ", "Hover over search bar and see the tooltip for more information.");
+            return;
+        }
+        
+        
+
+        String tempAlbumName = "Search Results";
+        // go through the user's albums. if the album name is the same as the temp album name, keep appending a number to the end until it's unique
+        int count = 1;
+        String uniqueAlbumName = tempAlbumName;
+        while (user.getAlbum(uniqueAlbumName) != null) {
+            uniqueAlbumName = tempAlbumName + count;
+            count++;
+        }
+        tempAlbumName = uniqueAlbumName;
+
+        // create a new, temporary album to store the search results
+        Album searchResults = new Album(uniqueAlbumName, photos);
+        // load the gallery controller
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/searchresults.fxml"));
+        Pane root = loader.load();
+        SearchResultsController searchResultsController = loader.getController();
+
+        // get the current stage
+        Stage stage = (Stage) albumListController.albumListView.getScene().getWindow();
+        // start the gallery controller
+        
+        
+        // set the scene
+        Scene scene = new Scene(root, 800, 600);
+        searchResultsController.start(scene, app, user, searchResults);
+        stage.setScene(scene);
+        stage.show();
+
+
+    }
+
+    @FXML public void quit() {
+        // quit application, but save it also
+        app.quit();
     }
 
     @FXML public void openAlbum() throws IOException {
