@@ -1,9 +1,11 @@
 package model;
 
+// Java imports
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// JavaFX imports
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -11,21 +13,48 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import controller.LoginController;
 import javafx.scene.control.Alert;
 
+// Project imports
+import controller.LoginController;
+
+/**
+ *  Represents the application. The application has a list of users. The application can be created with a list of users.
+ *  The application can have users added to it. The application can have users retrieved from it.
+ *  The application can be saved to a file and read from a file.
+ *  The application can create a stock user with stock photos.
+ *  The application can start the application.
+ *  The application can create an error alert.
+ *  The application can create an information alert.
+ *  The application can logout.
+ *  The application can quit.
+ *
+ * @author jacobjude
+ * @author ks1686
+ */
 public class Photos extends Application implements Serializable {
 
     public static final String storeDir = "data";
     public static final String storeFile = "data.dat";
-    static final long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private List<User> userList;
 
+    /**
+     * gets the list of users
+     *
+     * @return the list of users
+     */
     public List<User> getUsers() {
         return userList;
     }
 
+    /**
+     * create stock user with stock photos
+     *
+     * @param app the Photos object
+     */
     private void createStockUser(Photos app) {
         // get all the files in data/users/stock/photos/
         File stockPhotos = new File("data/users/stock/photos");
@@ -40,6 +69,12 @@ public class Photos extends Application implements Serializable {
         app.userList.add(stockUser);
     }
 
+    /**
+     * start the application
+     *
+     * @param primaryStage the stage
+     * @throws Exception if there is an exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         Photos app;
@@ -62,15 +97,12 @@ public class Photos extends Application implements Serializable {
         final Photos finalApp = app; // doesn't work without this for some reason
 
         // if user presses the X button, save the state of the app (this will save all Users, Albums, Photo objects)
-        primaryStage.setOnCloseRequest((EventHandler<WindowEvent>) new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                
-                try {
-                    Photos.writeApp(finalApp);
-                } catch (IOException e) {
-                    errorAlert("Error writing to file", "", "Error writing to file /data/data.dat");
-                }
+        primaryStage.setOnCloseRequest(event -> {
+
+            try {
+                Photos.writeApp(finalApp);
+            } catch (IOException e) {
+                errorAlert("Error writing to file", "", "Error writing to file /data/data.dat");
             }
         });
         
@@ -78,12 +110,23 @@ public class Photos extends Application implements Serializable {
         
     }
 
+    /**
+     * writes the app to a file
+     * @param app
+     * @throws IOException
+     */
     public static void writeApp(Photos app) throws IOException {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storeDir + File.separator + storeFile));
         oos.writeObject(app);
         oos.close();
     }
 
+    /**
+     * reads the app from a file
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public static Photos readApp() throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream(storeDir + File.separator + storeFile));
         Photos app = (Photos) ois.readObject();
@@ -92,11 +135,20 @@ public class Photos extends Application implements Serializable {
     }
 
 
-    public static void main(String[] args) throws Exception {
+    /**
+     * launches the application
+     * @param args
+     */
+    public static void main(String[] args) {
         launch(args);
     }
 
-    // method to create an error alert
+    /**
+     * creates an error alert
+     * @param title
+     * @param header
+     * @param content
+     */
     public static void errorAlert(String title, String header, String content) {
         // create an alert
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -106,7 +158,12 @@ public class Photos extends Application implements Serializable {
         alert.showAndWait();
     }
 
-    // method to create an information alert
+    /**
+     * creates an information alert
+     * @param title
+     * @param header
+     * @param content
+     */
     public static void infoAlert(String title, String header, String content) {
         // create an alert
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -116,7 +173,10 @@ public class Photos extends Application implements Serializable {
         alert.showAndWait();
     }
 
-    // logout method (do NOT create a new PhotoApp object)
+    /**
+     * log out of the application
+     * @param app
+     */
     public void logout(Photos app) {
         // save the app
         try {
@@ -143,6 +203,9 @@ public class Photos extends Application implements Serializable {
         }
     }
 
+    /**
+     * quit the application
+     */
     public void quit(){ 
         // save the app 
         // TODO: test and make sure this actually saves the data

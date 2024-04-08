@@ -1,13 +1,30 @@
 package model;
+
+// Java imports
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a user. A user has a username and a list of albums. A user can be
+ * created with a username. A user can have albums added to it, deleted from it,
+ * and retrieved from it. A user can be searched for photos based on tags. A
+ * user can have its username changed.
+ *
+ * @author jacobjude
+ */
 public class User implements Serializable {
     private String username;
     private List<Album> albums; // ArrayList of albums
     private List<String> tagTypes;
-    
+
+    /**
+     * Creates a user with the given username.
+     *
+     * @param username the username of the user
+     * @throws NullPointerException if the username is null
+     * @throws IllegalArgumentException if the username is empty
+     */
     public User(String username) throws NullPointerException, IllegalArgumentException {
         if (username == null) {
             throw new NullPointerException("username cannot be null");
@@ -24,27 +41,36 @@ public class User implements Serializable {
         this.tagTypes.add("Object");
     }
 
+    /**
+     * get the tag types
+     * @return the tag types
+     */
     public List<String> getTagTypes() {
         return this.tagTypes;
     }
 
+    /**
+     * get the username of the user
+     * @return the username of the user
+     */
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) throws NullPointerException, IllegalArgumentException {
-        if (username == null) {
-            throw new NullPointerException("username cannot be null");
-        } else if (username.isEmpty()) {
-            throw new IllegalArgumentException("username cannot be empty");
-        }
-        this.username = username;
-    }
-
+    /**
+     * get the albums of the user
+     * @return the albums of the user
+     */
     public List<Album> getAlbums() {
         return albums;
     }
 
+    /**
+     * search for photos in the user's albums based on the given query
+     * @param query
+     * @return
+     * @throws IllegalArgumentException
+     */
     public List<Photo> searchAlbums(String query) throws IllegalArgumentException {
         try {
             List<Photo> photos = new ArrayList<>();
@@ -58,36 +84,41 @@ public class User implements Serializable {
         }
 
     }
+
+    /**
+     * create a new album with the given name
+     * @param albumName
+     */
     public void createAlbum(String albumName) {
         Album album = new Album(albumName);
 
         for (Album a : albums) {
             if (a.getAlbumName().equals(albumName)) {
-                Photos.errorAlert("An album with this name already exists", "", "Please choose a different name and try again.");;
+                Photos.errorAlert("An album with this name already exists", "", "Please choose a different name and try again.");
             }
         }
 
         albums.add(album);
     }
 
-    public void deleteAlbum(String albumName) {
-        for (int i = 0; i < albums.size(); i++) {
-            if (albums.get(i).getAlbumName().equals(albumName)) {
-                albums.remove(i); // Remove the album from the ArrayList
-                break;
-            }
-        }
-    }
-
+    /**
+     * get the album with the given name
+     * @param albumName
+     * @return the album with the given name
+     */
     public Album getAlbum(String albumName) {
-        for (int i = 0; i < albums.size(); i++) {
-            if (albums.get(i).getAlbumName().equals(albumName)) {
-                return albums.get(i); // Return the album
+        for (Album album : albums) {
+            if (album.getAlbumName().equals(albumName)) {
+                return album; // Return the album
             }
         }
         return null; // Return null if the album is not found
     }
 
+    /**
+     * toString method
+     * @return the string representation of the user
+     */
     public String toString() {
         String result = "";
         for (Album album : albums) {

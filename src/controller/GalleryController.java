@@ -1,5 +1,11 @@
 package controller;
 
+// Java Imports
+import java.io.File;
+import java.io.IOException;
+import java.util.NoSuchElementException;
+
+// JavaFX Imports
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,43 +16,34 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+// Project Imports
 import model.Photos;
 import model.User;
 import model.Album;
 import model.Photo;
-
 import static model.Photos.errorAlert;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.NoSuchElementException;
-
-
+/**
+ * GalleryController class is the controller for the gallery view. It allows the user to add photos to the album, remove
+ * photos from the album, set captions for photos, display photos separately, edit tags for photos, copy photos to other
+ * albums, move photos to other albums, and return to the homepage.
+ *
+ * @author jacobjude
+ * @author ks1686
+ */
 public class GalleryController {
     public AnchorPane galleryView;
-  public Button removePhotoButton;
+    public Button removePhotoButton;
     public Button setCaptionButton;
-  public Button displaySeparatelyButton;
-  public Button editTagsButton;
-  public Button backToAlbums;
+    public Button displaySeparatelyButton;
+    public Button editTagsButton;
+    public Button backToAlbums;
     @FXML protected GalleryImageViewController galleryViewController;
 
     private Photos app;
 
     private Album album;
     private User user;
-
-    public User getUser() {
-        return user;
-    }
-
-    // method to start the gallery controller
-    public void start(Photos app, Album album, User user) {
-        galleryViewController.start(album);
-        this.app = app;
-        this.album = album;
-        this.user=user;
-    }
 
     @FXML
     private Button addPhotoButton;
@@ -56,6 +53,31 @@ public class GalleryController {
 
     @FXML
     private Button moveToAlbumButton;
+
+    /**
+     * Method to get the album
+     * @return
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * Method to start the gallery controller
+     * @param app
+     * @param album
+     * @param user
+     */
+    public void start(Photos app, Album album, User user) {
+        galleryViewController.start(album);
+        this.app = app;
+        this.album = album;
+        this.user=user;
+    }
+
+    /**
+     * Method to add a photo to the album
+     */
     public void addPhoto() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
@@ -72,7 +94,9 @@ public class GalleryController {
         }
     }
 
-
+    /**
+     * Method to remove a photo from the album
+     */
     @FXML
     public void removePhoto() {
         // get the selected photo
@@ -87,6 +111,9 @@ public class GalleryController {
         // messy but works. could also do this for addphoto, but it's not necessary
     }
 
+    /**
+     * Method to set the caption for a photo
+     */
     @FXML
     public void setCaption() {
         // TODO: Implement setCaption functionality
@@ -119,6 +146,9 @@ public class GalleryController {
 
     }
 
+    /**
+     * Method to display the photo separately
+     */
     @FXML
     public void displaySeparately() {
         // get the selected photo
@@ -142,6 +172,9 @@ public class GalleryController {
         }
     }
 
+    /**
+     * Method to edit the tags for a photo
+     */
     @FXML
     public void editTags() {
         Photo selectedPhoto = galleryViewController.getSelectedPhoto();
@@ -167,7 +200,9 @@ public class GalleryController {
         }
     }
 
-    // move to the choose album controller to select an album to copy the photo to
+    /**
+     * Method to copy a photo to another album
+     */
     @FXML
     public void copyToAlbum()  {
         // get the selected photo
@@ -196,6 +231,9 @@ public class GalleryController {
         }
     }
 
+    /**
+     * Method to move a photo to another album
+     */
     @FXML
     public void moveToAlbum() {
         Photo selectedPhoto = galleryViewController.getSelectedPhoto();
@@ -218,7 +256,9 @@ public class GalleryController {
 
     }
 
-    // method to move back to the homepage controller
+    /**
+     * Method to return to the homepage
+     */
     @FXML
     public void backToHomepage() {
         // get the current stage
@@ -238,7 +278,9 @@ public class GalleryController {
         }
     }
 
-    // method to open the slideshow view
+    /**
+     * Method to open the slideshow
+     */
     @FXML public void openSlideshow() {
         // get the selected photo
         Photo selectedPhoto = galleryViewController.getSelectedPhoto();

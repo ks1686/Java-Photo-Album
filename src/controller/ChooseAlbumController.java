@@ -1,7 +1,9 @@
 package controller;
 
+// Java imports
 import java.util.List;
 
+// JavaFX imports
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,13 +12,25 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+// Project imports
 import model.Album;
 import model.Photo;
 import model.Photos;
 import model.User;
-
 import static model.Photos.errorAlert;
 
+/**
+ * Controller for the choose album view.
+ * This view is used to choose an album to copy or move a photo to.
+ * The user can select an album from the list of albums.
+ * The user can then click the "Copy to Album" button to copy the photo to the selected album.
+ * The user can also click the "Move to Album" button to move the photo to the selected album.
+ * The user can also click the "Back to Photos" button to go back to the photos view.
+ *
+ * @author jacobjude
+ * @author ks1686
+ */
 public class ChooseAlbumController {
 
   public AnchorPane albumList;
@@ -37,7 +51,13 @@ public class ChooseAlbumController {
     private Album currentAlbum;
     private Photo selectedPhoto;
 
-    // method to start the controller
+    /**
+     * Method to start the controller
+     * @param app
+     * @param currentAlbum
+     * @param selectedPhoto
+     * @param user
+     */
     public void start(Photos app, Album currentAlbum, Photo selectedPhoto, User user) {
         this.app = app;
         this.currentAlbum = currentAlbum;
@@ -60,7 +80,9 @@ public class ChooseAlbumController {
         });
     }
 
-    // method to go back to the gallery view
+    /**
+     * Method to go back to the photos view
+     */
     @FXML
     public void backToGallery() {
         // get the current stage
@@ -81,7 +103,9 @@ public class ChooseAlbumController {
         }
     }
 
-    // method to copy the previously selected photo to the selected album
+    /**
+     * Method to copy or move the photo to the selected album
+     */
     @FXML
     public void moveOrCopyToAlbum() {
         // if the selected album is not null, copy the photo to the album
@@ -114,16 +138,31 @@ public class ChooseAlbumController {
 
     }
 
+    /**
+     * Method to copy a photo to an album
+     * @param photo
+     * @param album
+     */
     public void copyToAlbum(Photo photo, Album album) {
         album.addPhoto(photo);
     }
 
+    /**
+     * Method to move a photo to an album
+     * @param photo
+     * @param oldAlbum
+     * @param album
+     */
     public void moveToAlbum(Photo photo, Album oldAlbum, Album album) {
         album.addPhoto(photo);
         oldAlbum.removePhoto(photo);
 
     }
 
+    /**
+     * Method to get the selected album
+     * @return selectedAlbum button
+     */
     public Button getSelectAlbumButton() {
         return selectAlbumButton;
     }

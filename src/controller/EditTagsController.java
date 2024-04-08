@@ -1,14 +1,25 @@
 package controller;
 
+// Java imports
 import java.util.Optional;
 
+// JavaFX imports
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
+
+// Project imports
 import model.Photo;
 import model.Photos;
 import model.User;
 
+/**
+ * Controller class for the EditTags view.
+ * This class is responsible for handling user input and updating the view.
+ * It is also responsible for updating the model.
+ *
+ * @author jacobjude
+ */
 public class EditTagsController {
 
     @FXML
@@ -31,6 +42,12 @@ public class EditTagsController {
     private String selectedTag;
     private String selectedTagType;
 
+    /**
+     * Initializes the controller class.
+     * @param user
+     * @param app
+     * @param photo
+     */
     @FXML
     public void start(User user, Photos app, Photo photo) {
         tagsListController.start(user, app, photo);
@@ -48,6 +65,9 @@ public class EditTagsController {
         });
     }
 
+    /**
+     * Deletes the selected tag type.
+     */
     @FXML private void deleteTagType() {
         if (selectedTagType == null) {
             Photos.errorAlert("Error", "No tag type selected.", "Please select a tag type to delete.");
@@ -58,6 +78,9 @@ public class EditTagsController {
         Photos.infoAlert("Success", "Tag type deleted successfully.", "The tag type has been removed from the photo.");
     }
 
+    /**
+     * Adds a tag to the photo.
+     */
     @FXML
     private void addTag() {
 
@@ -80,6 +103,9 @@ public class EditTagsController {
         Photos.infoAlert("Success", "Tag added successfully.", "The tag has been added to the photo.");
     }
 
+    /**
+     * Creates a new tag type.
+     */
     @FXML
     private void createTagType() {
         TextInputDialog dialog = new TextInputDialog();
@@ -97,8 +123,11 @@ public class EditTagsController {
 
         }
         Photos.infoAlert("Success", "Tag type added successfully.", "You can now use this tag type to tag photos.");
-    }  
+    }
 
+    /**
+     * Deletes the selected tag.
+     */
     @FXML
     private void deleteSelectedTag() {
         String tagType = selectedTag.split(":")[0].strip();

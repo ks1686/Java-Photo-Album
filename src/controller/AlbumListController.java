@@ -1,10 +1,12 @@
 package controller;
 
+// Java imports
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+// JavaFX imports
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,21 +15,35 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
+// Project imports
 import model.Album;
 import model.Photos;
 import model.User;
-
 import static model.Photos.errorAlert;
 import static model.Photos.infoAlert;
 
-
+/**
+ * AlbumListController class is the controller for the album list view.
+ * It allows the user to delete, rename, and create albums.
+ * It also allows the user to select an album to view its photos.
+ * It is used in the album list view.
+ *
+ * @author jacobjude
+ * @author ks1686
+ */
 public class AlbumListController {
     @FXML ListView<String> albumListView;
     private ObservableList<String> obsList;
     private User user;
     private Photos app;
 
-    // method to start the album list controller
+
+    /**
+     * Method to start the album list controller
+     * @param user
+     * @param app
+     */
     public void start(User user, Photos app) {
 
         List<Album> albums = user.getAlbums();
@@ -48,6 +64,11 @@ public class AlbumListController {
 
     }
 
+    /**
+     * Method to get the album name
+     * @param album
+     * @return album name
+     */
     private static String getAlbumName(Album album) {
         String albumName = album.getAlbumName();
         int numPhotos = album.getPhotos().size();
@@ -72,12 +93,18 @@ public class AlbumListController {
         return albumName;
     }
 
-    // method to return the selected album
+    /**
+     * Method to get the selected album
+     * @return album name
+     */
     public String getSelectedAlbum() {
         return albumListView.getSelectionModel().getSelectedItem();
     }
 
-    // method to delete the album
+    /**
+     * Method to delete an album
+     * @param albumName
+     */
     public void deleteAlbum(String albumName) {
         user.getAlbums().remove(user.getAlbum(albumName));
         obsList.remove(albumName);
@@ -104,8 +131,11 @@ public class AlbumListController {
         stage.show();
     }
 
-
-    // method to rename an existing album
+    /**
+     * Method to rename an album
+     * @param albumName
+     * @param newAlbumName
+     */
     public void renameAlbum(String albumName, String newAlbumName) {
         // fix the album name
         albumName = fixAlbumName(albumName);
@@ -137,6 +167,10 @@ public class AlbumListController {
         }
     }
 
+    /**
+     * Method to create an album
+     * @param albumName
+     */
     public void createAlbum(String albumName) {
         // if the album name is not null and doesn't already exist, create the album
         if (albumName == null || albumName.isBlank()) {
@@ -181,7 +215,11 @@ public class AlbumListController {
 
     }
 
-    // method to fix album names for directory modification
+    /**
+     * Method to fix the album name
+     * @param albumName
+     * @return
+     */
     public String fixAlbumName(String albumName) {
         // find the original album name (without the number of photos and range of dates)
         int index = albumName.indexOf("("); // find the index of the first parenthesis
