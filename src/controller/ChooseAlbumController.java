@@ -75,7 +75,6 @@ public class ChooseAlbumController {
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
-            e.printStackTrace();
             // show an alert if there's an error
             errorAlert("Error loading gallery", "Error loading gallery", "Error loading gallery");
 

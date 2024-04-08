@@ -137,7 +137,6 @@ public class GalleryController {
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
             // show an error alert that the separate photo display screen could not be loaded
             errorAlert("Display Separately", "Failed to load separate photo display screen", "Failed to load separate photo display screen");
         }

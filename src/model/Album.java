@@ -3,7 +3,6 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -155,7 +154,6 @@ public class Album implements Serializable {
                     result.add(photo);
                 }
             }
-            // print length of result
             return result;
         }
 

@@ -67,7 +67,6 @@ public class SearchResultsController {
                 stage.setScene(new Scene(root, 800, 600));
                 stage.show();
             } catch (IOException e) {
-                e.printStackTrace();
                 // show an error alert that the album screen could not be loaded
                 errorAlert("Create Album", "Failed to load album screen", "Failed to load album screen");
             }
@@ -87,7 +86,6 @@ public class SearchResultsController {
             stage.setScene(new Scene(root, 800, 600));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
             // show an error alert that the homepage screen could not be returned to
             errorAlert("Back to Homepage", "Failed to return to homepage screen", "Failed to return to homepage screen");
         }

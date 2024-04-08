@@ -14,8 +14,6 @@ import javafx.stage.WindowEvent;
 import controller.LoginController;
 import javafx.scene.control.Alert;
 
-// TODO: remove all print statements before submitting
-
 public class Photos extends Application implements Serializable {
 
     public static final String storeDir = "data";
@@ -140,7 +138,6 @@ public class Photos extends Application implements Serializable {
             stage.show();
 
         } catch (IOException e) {
-            e.printStackTrace();
             // show an error alert that the login screen could not be returned to
             errorAlert("Logout", "Failed to return to login screen", "Failed to return to login screen");
         }

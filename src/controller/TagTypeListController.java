@@ -23,7 +23,6 @@ public class TagTypeListController {
 
         List<String> tagTypes = user.getTagTypes();
         List<String> tags = new ArrayList<>();
-        System.out.println(tagTypes.toString());
         for (String tagType: tagTypes) {
             // tagname is key and tagvalue is value
             tags.add(tagType);

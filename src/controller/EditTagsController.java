@@ -40,13 +40,11 @@ public class EditTagsController {
 
         tagsListController.tagsListView.setOnMouseClicked(e -> {
             selectedTag = tagsListController.tagsListView.getSelectionModel().getSelectedItem();
-            System.out.println("Selected tag: " + selectedTag);
         });
 
         tagTypeListController.tagTypeListView.setOnMouseClicked(e -> {
             
             selectedTagType = tagTypeListController.tagTypeListView.getSelectionModel().getSelectedItem();
-            System.out.println("Selected tagtype: " + selectedTagType);
         });
     }
 
