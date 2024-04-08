@@ -188,7 +188,7 @@ public class GalleryController {
         try {
             Pane root = loader.load();
             EditTagsController EditTagsController = loader.getController();
-            EditTagsController.start(user, app, selectedPhoto);
+            EditTagsController.start(user, app, selectedPhoto, album);
             Scene scene = new Scene(root, 800, 600);
             // get the current stage
             Stage stage = (Stage) editTagsButton.getScene().getWindow();

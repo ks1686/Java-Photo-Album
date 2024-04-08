@@ -5,10 +5,15 @@ import java.util.Optional;
 
 // JavaFX imports
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 
 // Project imports
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import model.Album;
 import model.Photo;
 import model.Photos;
 import model.User;
@@ -41,6 +46,8 @@ public class EditTagsController {
 
     private String selectedTag;
     private String selectedTagType;
+    private Photos app;
+    private Album album;
 
     /**
      * Initializes the controller class.
@@ -49,11 +56,13 @@ public class EditTagsController {
      * @param photo: the photo to edit tags for
      */
     @FXML
-    public void start(User user, Photos app, Photo photo) {
+    public void start(User user, Photos app, Photo photo, Album album) {
         tagsListController.start(user, app, photo);
         tagTypeListController.start(user, app, photo);
         this.user = user;
         this.photo = photo;
+        this.app = app;
+        this.album = album;
 
         tagsListController.tagsListView.setOnMouseClicked(e -> {
             selectedTag = tagsListController.tagsListView.getSelectionModel().getSelectedItem();
@@ -136,5 +145,28 @@ public class EditTagsController {
         this.photo.deleteTag(tagType, tagValue);
         tagsListController.deleteTag(tagType, tagValue);
         Photos.infoAlert("Success", "Tag " + selectedTag + " (previously selected) has been deleted successfully.", "The tag has been removed from the photo.");
+    }
+
+    /**
+     * Navigates back to the gallery view.
+     */
+    @FXML
+    private void backToGallery() {
+        // get the current stage
+        Stage stage = (Stage) addTagButton.getScene().getWindow();
+        // load the gallery.fxml file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/gallery.fxml"));
+        try {
+            Pane root = loader.load();
+            GalleryController galleryController = loader.getController();
+            galleryController.start(this.app, this.album, this.user);
+            Scene scene = new Scene(root, 800, 600);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            // show an alert if there's an error
+            Photos.errorAlert("Error loading gallery", "Error loading gallery", "Error loading gallery");
+
+        }
     }
 }

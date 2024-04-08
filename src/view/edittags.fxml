@@ -38,4 +38,5 @@
          <Font size="38.0" />
       </font>
    </Text>
+   <Button fx:id="backToPhotos" layoutX="24.0" layoutY="24.0" mnemonicParsing="false" onAction="#backToGallery" text="Back to Photos" />
 </Pane>
