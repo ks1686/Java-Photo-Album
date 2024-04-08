@@ -6,6 +6,7 @@ import java.util.List;
 public class User implements Serializable {
     private String username;
     private List<Album> albums; // ArrayList of albums
+    private List<String> tagTypes;
     
     public User(String username) throws NullPointerException, IllegalArgumentException {
         if (username == null) {
@@ -13,9 +14,18 @@ public class User implements Serializable {
         } else if (username.isEmpty()) {
             throw new IllegalArgumentException("username cannot be empty");
         } 
-
+            
         this.username = username;
         this.albums = new ArrayList<>(); // Initialize the ArrayList
+        this.tagTypes = new ArrayList<>();
+        // add some default tags like location, person, etc.
+        this.tagTypes.add("Location");
+        this.tagTypes.add("Person");
+        this.tagTypes.add("Object");
+    }
+
+    public List<String> getTagTypes() {
+        return this.tagTypes;
     }
 
     public String getUsername() {

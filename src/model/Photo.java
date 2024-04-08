@@ -64,6 +64,15 @@ public class Photo implements Serializable {
         this(filepath, caption, new ArrayList<>());
     }
 
+    public void deleteTag(String key, String value) {
+        for (int i = 0; i < tags.size(); i++) {
+            if (tags.get(i).containsKey(key) && tags.get(i).containsValue(value)) {
+                tags.remove(i);
+                break;
+            }
+        }
+    }
+
     public Photo(String filepath, List<Map<String, String>> tags) {
         this(filepath, "", tags);
     }

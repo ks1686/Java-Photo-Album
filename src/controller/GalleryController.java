@@ -145,8 +145,27 @@ public class GalleryController {
 
     @FXML
     public void editTags() {
-        // TODO: Implement editTags functionality
-        // should prob make a new scene or listview or something for this
+        Photo selectedPhoto = galleryViewController.getSelectedPhoto();
+
+        if (selectedPhoto == null) {
+            errorAlert("Edit Tags", "No photo selected", "No photo selected");
+            return;
+        }
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/edittags.fxml"));
+        try {
+            Pane root = loader.load();
+            EditTagsController EditTagsController = loader.getController();
+            EditTagsController.start(user, app, selectedPhoto);
+            Scene scene = new Scene(root, 800, 600);
+            // get the current stage
+            Stage stage = (Stage) editTagsButton.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            errorAlert("Edit Tags", "Failed to load edit tags screen", "Failed to load edit tags screen");
+        }
     }
 
     // move to the choose album controller to select an album to copy the photo to
