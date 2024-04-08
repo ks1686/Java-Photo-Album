@@ -1,16 +1,29 @@
 package controller;
 
+// Java imports
 import java.io.File;
 import java.util.List;
+
+// JavaFX imports
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+
+// Project imports
 import model.Album;
 import model.Photo;
 
+/**
+ * GalleryImageViewController class to control the gallery image view
+ * This class is responsible for displaying the photos in the gallery
+ * and handling the selection of a photo.
+ *
+ * @author jacobjude
+ * @author ks1686
+ */
 public class GalleryImageViewController  {
 
     @FXML private TilePane galleryImageView;
@@ -18,11 +31,18 @@ public class GalleryImageViewController  {
     // local variable to store the selected photo
     private Photo selectedPhoto;
 
+    /**
+     * Constructor for the GalleryImageViewController
+     * @return a new instance of the GalleryImageViewController
+     */
     public Photo getSelectedPhoto() {
         return this.selectedPhoto;
     }
-    
-    // method to start the gallery image view controller
+
+    /**
+     * Method to add a photo to the gallery
+     * @param photo: the photo to add to the gallery
+     */
     protected void addToGallery(Photo photo) {
         // get the photo
         String filepath = photo.getFilePath();
@@ -59,6 +79,10 @@ public class GalleryImageViewController  {
 
     }
 
+    /**
+     * Method to start the gallery image view
+     * @param album: the album to display in the gallery
+     */
     public void start(Album album) {
         // set the album
 
@@ -74,6 +98,10 @@ public class GalleryImageViewController  {
         }
     }
 
+    /**
+     * Method to get the gallery image view
+     * @return the gallery image view
+     */
     public TilePane getGalleryImageView() {
         return galleryImageView;
     }

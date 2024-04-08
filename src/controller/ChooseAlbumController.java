@@ -53,10 +53,10 @@ public class ChooseAlbumController {
 
     /**
      * Method to start the controller
-     * @param app
-     * @param currentAlbum
-     * @param selectedPhoto
-     * @param user
+     * @param app: Photos
+     * @param currentAlbum: Album
+     * @param selectedPhoto: the photo selected
+     * @param user: the current user
      */
     public void start(Photos app, Album currentAlbum, Photo selectedPhoto, User user) {
         this.app = app;
@@ -140,8 +140,8 @@ public class ChooseAlbumController {
 
     /**
      * Method to copy a photo to an album
-     * @param photo
-     * @param album
+     * @param photo: the photo to copy
+     * @param album: the album to copy the photo to
      */
     public void copyToAlbum(Photo photo, Album album) {
         album.addPhoto(photo);
@@ -149,9 +149,9 @@ public class ChooseAlbumController {
 
     /**
      * Method to move a photo to an album
-     * @param photo
-     * @param oldAlbum
-     * @param album
+     * @param photo: the photo to move
+     * @param oldAlbum: the album the photo is currently in
+     * @param album: the album to move the photo to
      */
     public void moveToAlbum(Photo photo, Album oldAlbum, Album album) {
         album.addPhoto(photo);

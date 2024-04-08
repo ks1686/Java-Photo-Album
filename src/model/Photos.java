@@ -7,12 +7,10 @@ import java.util.List;
 
 // JavaFX imports
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import javafx.scene.control.Alert;
 
 // Project imports
@@ -112,8 +110,8 @@ public class Photos extends Application implements Serializable {
 
     /**
      * writes the app to a file
-     * @param app
-     * @throws IOException
+     * @param app: the app to write
+     * @throws IOException: if there is an error writing the file
      */
     public static void writeApp(Photos app) throws IOException {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storeDir + File.separator + storeFile));
@@ -123,9 +121,9 @@ public class Photos extends Application implements Serializable {
 
     /**
      * reads the app from a file
-     * @return
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @return the app
+     * @throws IOException: if there is an error reading the file
+     * @throws ClassNotFoundException: if the class is not found
      */
     public static Photos readApp() throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream(storeDir + File.separator + storeFile));
@@ -137,7 +135,7 @@ public class Photos extends Application implements Serializable {
 
     /**
      * launches the application
-     * @param args
+     * @param args: the arguments
      */
     public static void main(String[] args) {
         launch(args);
@@ -145,9 +143,9 @@ public class Photos extends Application implements Serializable {
 
     /**
      * creates an error alert
-     * @param title
-     * @param header
-     * @param content
+     * @param title: the title of the alert
+     * @param header: the header of the alert
+     * @param content: the content of the alert
      */
     public static void errorAlert(String title, String header, String content) {
         // create an alert
@@ -160,9 +158,9 @@ public class Photos extends Application implements Serializable {
 
     /**
      * creates an information alert
-     * @param title
-     * @param header
-     * @param content
+     * @param title: the title of the alert
+     * @param header: the header of the alert
+     * @param content: the content of the alert
      */
     public static void infoAlert(String title, String header, String content) {
         // create an alert
@@ -175,7 +173,7 @@ public class Photos extends Application implements Serializable {
 
     /**
      * log out of the application
-     * @param app
+     * @param app: the app to log out of
      */
     public void logout(Photos app) {
         // save the app

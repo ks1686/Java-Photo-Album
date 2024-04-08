@@ -1,5 +1,6 @@
 package controller;
 
+// JavaFX imports
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -7,9 +8,20 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+//Project imports
 import model.Photos;
 import model.User;
 
+/**
+ * Controller for the login screen
+ * Handles the login button being clicked
+ * If the username is "admin", the admin homepage is loaded
+ * If the username is a user in the app, the homepage is loaded
+ * If the username is not a user in the app, an error alert is shown
+ *
+ * @author jacobjude
+ */
 public class LoginController {
 
   public Text loginText;
@@ -18,10 +30,18 @@ public class LoginController {
 
     private Photos app;
 
+    /**
+     * Sets the app for the controller
+     * @param app: the app to set
+     */
     public void setApp(Photos app) {
         this.app = app;
     }
 
+    /**
+     * Handles the login button being clicked
+     * @throws Exception: if the fxml file cannot be found
+     */
     public void handleLogin() throws Exception{
         String username = usernameTextField.getText();
 

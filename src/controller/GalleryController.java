@@ -56,7 +56,7 @@ public class GalleryController {
 
     /**
      * Method to get the album
-     * @return
+     * @return album
      */
     public User getUser() {
         return user;
@@ -64,9 +64,9 @@ public class GalleryController {
 
     /**
      * Method to start the gallery controller
-     * @param app
-     * @param album
-     * @param user
+     * @param app: Photos
+     * @param album: the album
+     * @param user: the current user
      */
     public void start(Photos app, Album album, User user) {
         galleryViewController.start(album);

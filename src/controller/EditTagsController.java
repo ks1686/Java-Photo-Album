@@ -44,9 +44,9 @@ public class EditTagsController {
 
     /**
      * Initializes the controller class.
-     * @param user
-     * @param app
-     * @param photo
+     * @param user: the current user
+     * @param app: the main application
+     * @param photo: the photo to edit tags for
      */
     @FXML
     public void start(User user, Photos app, Photo photo) {

@@ -67,9 +67,9 @@ public class User implements Serializable {
 
     /**
      * search for photos in the user's albums based on the given query
-     * @param query
-     * @return
-     * @throws IllegalArgumentException
+     * @param query: the query to search for
+     * @return the photos that match the query
+     * @throws IllegalArgumentException: if the query is null or empty
      */
     public List<Photo> searchAlbums(String query) throws IllegalArgumentException {
         try {
@@ -87,7 +87,7 @@ public class User implements Serializable {
 
     /**
      * create a new album with the given name
-     * @param albumName
+     * @param albumName: the name of the album to create
      */
     public void createAlbum(String albumName) {
         Album album = new Album(albumName);
@@ -103,7 +103,7 @@ public class User implements Serializable {
 
     /**
      * get the album with the given name
-     * @param albumName
+     * @param albumName: the name of the album to get
      * @return the album with the given name
      */
     public Album getAlbum(String albumName) {

@@ -30,8 +30,8 @@ public class AdminUserListController {
 
     /**
      * Start method for the admin user list controller.
-     * @param stage
-     * @param app
+     * @param stage: the stage to display the admin user list
+     * @param app: the Photos app
      */
     public void start(Stage stage, Photos app) {
         List<String> users = new ArrayList<>();
@@ -49,7 +49,7 @@ public class AdminUserListController {
 
     /**
      * Method to handle the enable/disable of the delete user button.
-     * @param mainstage
+     * @param mainstage: the stage to display the admin user list
      */
     private void showItem(Stage mainstage) {
         String selectedUser = adminUserListView.getSelectionModel().getSelectedItem();

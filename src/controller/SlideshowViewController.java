@@ -1,16 +1,26 @@
 package controller;
 
-import javafx.fxml.FXML;
-import model.Album;
-import model.Photo;
+// Java imports
+import java.io.File;
 
+// JavaFX imports
+import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 
-import java.io.File;
+// Project imports
+import model.Album;
+import model.Photo;
 
-
+/**
+ * Controller class for the slideshow view
+ * This class is responsible for the functionality of the slideshow view
+ * It allows the user to view the photos in the album in a slideshow
+ * The user can go to the next photo or the previous photo
+ *
+ * @author ks1686
+ */
 public class SlideshowViewController {
 
     private Album currentAlbum;
@@ -24,6 +34,12 @@ public class SlideshowViewController {
     // the imageView in the slideshow view
     @FXML
     private ImageView slideshowImageView;
+
+    /**
+     * Method to start the slideshow view
+     * @param selectedPhoto: the photo that the user selected
+     * @param currentAlbum: the album that the selected photo is in
+     */
     public void start(Photo selectedPhoto, Album currentAlbum) {
         this.currentAlbum = currentAlbum;
         this.currentPhoto = selectedPhoto;
@@ -40,7 +56,9 @@ public class SlideshowViewController {
 
     }
 
-    // method to go to the next photo
+    /**
+     * Method to go to the next photo (disable the button if there is no next photo)
+     */
     @FXML
     public void nextPhoto() {
         // get the next photo
@@ -66,7 +84,9 @@ public class SlideshowViewController {
 
     }
 
-    // method to go to the previous photo (disable the button if there is no previous photo)
+    /**
+     * Method to go to the previous photo (disable the button if there is no previous photo)
+     */
     @FXML
     public void previousPhoto() {
         // get the previous photo

@@ -87,7 +87,6 @@ public class Photo implements Serializable {
      * Creates a photo with just a file path.
      *
      * @param filepath the file path of the photo
-     * @return a photo with just a file path
      */
     public Photo(String filepath) {
         this(filepath, "", new ArrayList<>());
@@ -97,7 +96,6 @@ public class Photo implements Serializable {
      * Creates a photo with a file path and a caption.
      *
      * @param filepath the file path of the photo
-     * @return a photo with a file path and a caption
      */
     public Photo(String filepath, String caption) {
         this(filepath, caption, new ArrayList<>());
@@ -123,7 +121,6 @@ public class Photo implements Serializable {
      *
      * @param filepath the file path of the photo
      * @param tags the tags of the photo
-     * @return a photo with just a file path and a list of tags
      */
     public Photo(String filepath, List<Map<String, String>> tags) {
         this(filepath, "", tags);

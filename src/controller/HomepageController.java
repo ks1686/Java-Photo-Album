@@ -1,9 +1,11 @@
 package controller;
 
+// Java imports
 import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+// JavaFX imports
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,13 +15,24 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
+// Project imports
 import model.Album;
 import model.Photo;
 import model.User;
-
 import model.Photos;
 
-
+/**
+ * HomepageController class to control the homepage view
+ * This class is responsible for displaying the albums in the homepage
+ * and handling the selection of an album.
+ * It also allows the user to delete, rename, create, and open albums.
+ * It also allows the user to logout and quit the application.
+ * It also allows the user to search for photos.
+ *
+ * @author jacobjude
+ * @author ks1686
+ */
 public class HomepageController {
   public AnchorPane albumList;
   public Button deleteAlbumButton;
@@ -37,13 +50,20 @@ public class HomepageController {
     // private user object
     private User user;
 
+    /**
+     * Method to start the homepage controller
+     * @param user: the user object
+     * @param app: the Photos application
+     */
     public void start(User user, Photos app) { // TODO: make a User object and pass that instead
         albumListController.start(user, app);
         this.app = app;
         this.user = user;
     }
 
-    // method to delete an album
+    /**
+     * Method to delete an album
+     */
     @FXML
     private void deleteAlbum() {
         String albumName = albumListController.getSelectedAlbum();
@@ -59,7 +79,9 @@ public class HomepageController {
 
     }
 
-    // method to log out
+    /**
+     * Method to logout of the application
+     */
     @FXML
     private void logout() {
         app.logout(app);
@@ -68,7 +90,9 @@ public class HomepageController {
         stage.close();
     }
 
-    // method to rename an album
+    /**
+     * Method to rename an album
+     */
     @FXML
     private void renameAlbum() {
         // open a text input dialog box
@@ -96,7 +120,9 @@ public class HomepageController {
         }
     }
 
-    // method to create an album
+    /**
+     * Method to create an album
+     */
     @FXML public void createAlbum() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Create Album");
@@ -113,7 +139,11 @@ public class HomepageController {
 
     }
 
-    // method to search for photos
+    /**
+     * Method to check if a search query is valid
+     * @param query: the search query
+     * @return true if the search query is valid, false otherwise
+     */
     private boolean isValidSearchQuery(String query) {
         if (query == null || query.isEmpty()) {
             return false;
@@ -123,7 +153,10 @@ public class HomepageController {
         return query.matches("\\d{2}/\\d{2}/\\d{4}-\\d{2}/\\d{2}/\\d{4}") || query.matches("\\w+=\\w+") || query.matches("\\w+=\\w+ (AND|OR) \\w+=\\w+");
     }
 
-    // method to search for photos
+    /**
+     * Method to search for photos
+     * @throws IOException: if the search results page cannot be loaded
+     */
     @FXML public void searchPhotos() throws IOException {
         // string in the text bar
         String query = searchBarTextField.getText();
@@ -171,13 +204,18 @@ public class HomepageController {
 
     }
 
-    // method to quit the application
+    /**
+     * Method to quit the application
+     */
     @FXML public void quit() {
         // quit application, but save it also
         app.quit();
     }
 
-    // method to open an album
+    /**
+     * Method to open an album
+     * @throws IOException: if the album cannot be opened
+     */
     @FXML public void openAlbum() throws IOException {
         // open the selected album
         String albumName = albumListController.getSelectedAlbum();

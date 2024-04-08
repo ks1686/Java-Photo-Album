@@ -37,8 +37,8 @@ public class AdminHomepageController {
 
     /**
      * Start method for the admin homepage controller.
-     * @param stage
-     * @param app
+     * @param stage: the stage for the admin homepage
+     * @param app: the Photos app
      */
     public void start(Stage stage, Photos app) {
       this.app = app;
@@ -113,7 +113,7 @@ public class AdminHomepageController {
 
     /**
      * method to recursively delete a directory
-     * @param dir
+     * @param dir: the directory to delete
      */
     private void recursiveDeleteDir(File dir) {
       File[] files = dir.listFiles();
@@ -131,8 +131,8 @@ public class AdminHomepageController {
 
     /**
      * method to show an input dialog box to get the username of the new user
-     * @param mainStage
-     * @return
+     * @param mainStage: the main stage
+     * @return the username of the new user
      */
     private Optional<String> showItemInputDialog(Stage mainStage) {
       TextInputDialog dialog = new TextInputDialog();

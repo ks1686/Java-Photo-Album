@@ -41,8 +41,8 @@ public class AlbumListController {
 
     /**
      * Method to start the album list controller
-     * @param user
-     * @param app
+     * @param user: the user
+     * @param app: the Photos app
      */
     public void start(User user, Photos app) {
 
@@ -66,7 +66,7 @@ public class AlbumListController {
 
     /**
      * Method to get the album name
-     * @param album
+     * @param album: the album
      * @return album name
      */
     private static String getAlbumName(Album album) {
@@ -103,7 +103,7 @@ public class AlbumListController {
 
     /**
      * Method to delete an album
-     * @param albumName
+     * @param albumName: the album name
      */
     public void deleteAlbum(String albumName) {
         user.getAlbums().remove(user.getAlbum(albumName));
@@ -133,8 +133,8 @@ public class AlbumListController {
 
     /**
      * Method to rename an album
-     * @param albumName
-     * @param newAlbumName
+     * @param albumName: the album name
+     * @param newAlbumName: the new album name
      */
     public void renameAlbum(String albumName, String newAlbumName) {
         // fix the album name
@@ -169,7 +169,7 @@ public class AlbumListController {
 
     /**
      * Method to create an album
-     * @param albumName
+     * @param albumName: the album name
      */
     public void createAlbum(String albumName) {
         // if the album name is not null and doesn't already exist, create the album
@@ -217,8 +217,8 @@ public class AlbumListController {
 
     /**
      * Method to fix the album name
-     * @param albumName
-     * @return
+     * @param albumName: the album name
+     * @return the fixed album name
      */
     public String fixAlbumName(String albumName) {
         // find the original album name (without the number of photos and range of dates)

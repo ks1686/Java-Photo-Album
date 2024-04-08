@@ -1,9 +1,9 @@
 package controller;
 
-import static model.Photos.errorAlert;
-
+// Java imports
 import java.io.IOException;
 
+// JavaFX imports
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,10 +12,22 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
+// Project imports
 import model.Album;
 import model.Photo;
 import model.Photos;
 import model.User;
+import static model.Photos.errorAlert;
+
+/**
+ * Controller class for the search results screen.
+ * This class is responsible for handling user input and displaying the search results.
+ * The user can create a new album from the search results or return to the homepage.
+ * The search results are displayed in a gallery view.
+ *
+ * @author jacobjude
+ */
 public class SearchResultsController {
 
     public AnchorPane galleryView;
@@ -30,6 +42,13 @@ public class SearchResultsController {
     private Album searchResultsAlbum;
 
 
+    /**
+     * Initializes the search results screen.
+     *
+     * @param app the Photos application
+     * @param currentUser the current user
+     * @param searchResultsAlbum the album containing the search results
+     */
     @FXML
     public void start(Photos app, User currentUser, Album searchResultsAlbum) {
         this.app = app;
@@ -39,6 +58,10 @@ public class SearchResultsController {
         galleryViewController.start(searchResultsAlbum);
     }
 
+    /**
+     * Creates a new album from the search results.
+     * The user is prompted to enter the name of the new album.
+     */
     @FXML
     private void createAlbum() {
         // create a new TextInputDialog
@@ -73,6 +96,9 @@ public class SearchResultsController {
         });
     }
 
+    /**
+     * Returns to the homepage screen.
+     */
     @FXML
     public void backToHomepage() {
         // get the current stage
