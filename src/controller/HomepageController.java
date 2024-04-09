@@ -69,6 +69,10 @@ public class HomepageController {
         String albumName = albumListController.getSelectedAlbum();
 
         // fix the album name
+        if (albumName == null) {
+            Photos.errorAlert("Error", "No album selected", "Please select an album to delete.");
+            return;
+        }
         albumName = albumListController.fixAlbumName(albumName);
 
         // if album is not null, delete the album
@@ -96,6 +100,12 @@ public class HomepageController {
     @FXML
     private void renameAlbum() {
         // open a text input dialog box
+        String albumName = albumListController.getSelectedAlbum();
+
+        if (albumName == null) {
+            Photos.errorAlert("Error", "No album selected", "Please select an album to rename.");
+            return;
+        }
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Rename Album");
         dialog.setHeaderText("Enter the new album name:");
@@ -110,7 +120,7 @@ public class HomepageController {
         }
 
         // get the selected album
-        String albumName = albumListController.fixAlbumName(albumListController.getSelectedAlbum());
+        albumName = albumListController.fixAlbumName(albumListController.getSelectedAlbum());
 
         // if the album name is not null, rename the album
         if (albumName != null) {
@@ -219,7 +229,13 @@ public class HomepageController {
     @FXML public void openAlbum() throws IOException {
         // open the selected album
         String albumName = albumListController.getSelectedAlbum();
-        albumName = albumListController.fixAlbumName(albumName);
+        if (albumName != null) {
+            albumName = albumListController.fixAlbumName(albumName);
+        } else {
+            Photos.errorAlert("Open Album", "Failed to open album", "No album selected");
+            return;
+        }
+        
 
         // get the album object
         Album album = user.getAlbum(albumName);
