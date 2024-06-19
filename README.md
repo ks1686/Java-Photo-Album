@@ -1,5 +1,5 @@
-Photos Project
+Photo Gallery Desktop Application
 
 Contributors: 
-- Karim Smires, ks1686, 206007000
-- Jude Jacob, jacobjude, 216008549
+- Karim Smires
+- Jude Jacob
